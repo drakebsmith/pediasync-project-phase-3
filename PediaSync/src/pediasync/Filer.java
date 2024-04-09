@@ -7,16 +7,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Filer 
+public class Filer
 {
 	// Method that creates a file with the patient's basic information.
-	public void createFile(String first_name, String last_name, String date_of_birth) 
+	public void createFile(String first_name, String last_name, String date_of_birth, String username, String password) 
 	{
 		try 
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("[filepath here]\\" + last_name + first_name + "_PatientInfo.txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("[filepath here]\\" + username + "_PatientInfo.txt"));
 			
-			writer.write(first_name + "\n" + last_name + "\n" + date_of_birth);
+			writer.write(password + "\n" + first_name + "\n" + last_name + "\n" + date_of_birth);
 			
 			writer.close();
 		}
