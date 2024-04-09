@@ -11,7 +11,7 @@ public class ViewsInterface extends Stage
 {
 	
 	public ViewsInterface(String viewName, Stage stage) {
-		
+		//test
         Scene newScene;
         
         switch (viewName) {
