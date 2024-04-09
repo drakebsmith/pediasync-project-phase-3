@@ -22,7 +22,7 @@ public class ViewsInterface extends Stage
 	private String doctorLastName;
 	
 	public ViewsInterface(String viewName, String name) {
-		//test
+
         Scene newScene;
         
         switch (viewName) {
