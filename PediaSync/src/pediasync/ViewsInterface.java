@@ -17,25 +17,34 @@ import javafx.scene.control.Label;
 
 public class ViewsInterface extends Stage
 {
-	private String patientName;
-	private String nurseName;
-	private String doctorLastName;
+	String patientName = "";
+	String patientContact = "";
+	String patientEmergencyContact = "";
+	String patientAllergiesHealthConcerns = "";
+	String patientImmunization = "";
+	String patientHistory = "";
+	String patientPrescription = "";
+	String patientVitals = "";
+	String visitSummary = "";
 	
-	public ViewsInterface(String viewName, String name) {
+	String date = "4/9/2004";
+	
+	
+	private String nurseName = "";
+	private String doctorLastName = "";
+	
+	public ViewsInterface(String viewName) {
 		//test
         Scene newScene;
         
         switch (viewName) {
             case "Patient View":
-            	this.patientName = name;
                 newScene = patientView();
                 break;
             case "Nurse View":
-            	this.nurseName = name;
                 newScene = nurseView();
                 break;
             case "Doctor View":
-            	this.doctorLastName = name;
                 newScene = doctorView();
                 break;
             default:
@@ -132,6 +141,52 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label contactLabel = new Label("Contact: " + patientContact);
+	    contactLabel.setFont(new Font(12));
+	    contactLabel.setLayoutX(250);
+	    contactLabel.setLayoutY(100);
+	    
+	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
+	    emergencyContactLabel.setFont(new Font(12));
+	    emergencyContactLabel.setLayoutX(250);
+	    emergencyContactLabel.setLayoutY(130);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    allergiesHealthConcernsLabel.setFont(new Font(12));
+	    allergiesHealthConcernsLabel.setLayoutX(250);
+	    allergiesHealthConcernsLabel.setLayoutY(160);
+	    
+	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    immunizationHistoryLabel.setFont(new Font(12));
+	    immunizationHistoryLabel.setLayoutX(250);
+	    immunizationHistoryLabel.setLayoutY(190);
+	    
+	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    patientHistoryLabel.setFont(new Font(12));
+	    patientHistoryLabel.setLayoutX(250);
+	    patientHistoryLabel.setLayoutY(220);
+	    
+	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
+	    prescriptionLabel.setFont(new Font(12));
+	    prescriptionLabel.setLayoutX(250);
+	    prescriptionLabel.setLayoutY(250);
+	    
+	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(250);
+	    vitalsLabel.setLayoutY(280);
+	    
+	    Button addContactButton = new Button("+");
+	    addContactButton.setLayoutX(500);
+	    addContactButton.setLayoutY(100);
+	    
+	    Button addEmergencyContactButton = new Button("+");
+	    addEmergencyContactButton.setLayoutX(500);
+	    addEmergencyContactButton.setLayoutY(130);
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -140,7 +195,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(patientView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel, addContactButton, addEmergencyContactButton);
 	    
 	    return new Scene(pane, 800, 400);
 	    
@@ -199,6 +254,14 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+	    visitSummaryLabel.setFont(new Font(12));
+	    visitSummaryLabel.setLayoutX(100);
+	    visitSummaryLabel.setLayoutY(100);
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -207,7 +270,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(patientView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton, visitSummaryLabel);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -297,6 +360,46 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(250);
+	    vitalsLabel.setLayoutY(100);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    allergiesHealthConcernsLabel.setFont(new Font(12));
+	    allergiesHealthConcernsLabel.setLayoutX(250);
+	    allergiesHealthConcernsLabel.setLayoutY(130);
+	    
+	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    immunizationHistoryLabel.setFont(new Font(12));
+	    immunizationHistoryLabel.setLayoutX(250);
+	    immunizationHistoryLabel.setLayoutY(160);
+	    
+	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    patientHistoryLabel.setFont(new Font(12));
+	    patientHistoryLabel.setLayoutX(250);
+	    patientHistoryLabel.setLayoutY(190);
+	    
+	    Button addVitalsButton = new Button("+");
+	    addVitalsButton.setLayoutX(500);
+	    addVitalsButton.setLayoutY(100);
+	    
+	    Button addAllergiesAndHealthButton = new Button("+");
+	    addAllergiesAndHealthButton.setLayoutX(500);
+	    addAllergiesAndHealthButton.setLayoutY(130);
+	    
+	    Button addImmunizationButton = new Button("+");
+	    addImmunizationButton.setLayoutX(500);
+	    addImmunizationButton.setLayoutY(160);
+	    
+	    Button addPatientHistoryButton = new Button("+");
+	    addPatientHistoryButton.setLayoutX(500);
+	    addPatientHistoryButton.setLayoutY(190);
+	    
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -305,7 +408,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(nurseView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,addVitalsButton,addAllergiesAndHealthButton,addImmunizationButton,addPatientHistoryButton,vitalsLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -330,6 +433,47 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    
+	    Label contactLabel = new Label("Contact: " + patientContact);
+	    contactLabel.setFont(new Font(12));
+	    contactLabel.setLayoutX(250);
+	    contactLabel.setLayoutY(100);
+	    
+	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
+	    emergencyContactLabel.setFont(new Font(12));
+	    emergencyContactLabel.setLayoutX(250);
+	    emergencyContactLabel.setLayoutY(130);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    allergiesHealthConcernsLabel.setFont(new Font(12));
+	    allergiesHealthConcernsLabel.setLayoutX(250);
+	    allergiesHealthConcernsLabel.setLayoutY(160);
+	    
+	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    immunizationHistoryLabel.setFont(new Font(12));
+	    immunizationHistoryLabel.setLayoutX(250);
+	    immunizationHistoryLabel.setLayoutY(190);
+	    
+	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    patientHistoryLabel.setFont(new Font(12));
+	    patientHistoryLabel.setLayoutX(250);
+	    patientHistoryLabel.setLayoutY(220);
+	    
+	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
+	    prescriptionLabel.setFont(new Font(12));
+	    prescriptionLabel.setLayoutX(250);
+	    prescriptionLabel.setLayoutY(250);
+	    
+	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(250);
+	    vitalsLabel.setLayoutY(280);
+	    
+	    
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -338,7 +482,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(nurseView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -469,6 +613,55 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(250);
+	    vitalsLabel.setLayoutY(100);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    allergiesHealthConcernsLabel.setFont(new Font(12));
+	    allergiesHealthConcernsLabel.setLayoutX(250);
+	    allergiesHealthConcernsLabel.setLayoutY(130);
+	    
+	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    immunizationHistoryLabel.setFont(new Font(12));
+	    immunizationHistoryLabel.setLayoutX(250);
+	    immunizationHistoryLabel.setLayoutY(160);
+	    
+	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    patientHistoryLabel.setFont(new Font(12));
+	    patientHistoryLabel.setLayoutX(250);
+	    patientHistoryLabel.setLayoutY(190);
+	    
+	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
+	    prescriptionLabel.setFont(new Font(12));
+	    prescriptionLabel.setLayoutX(250);
+	    prescriptionLabel.setLayoutY(220);
+	    
+	    Button addVitalsButton = new Button("+");
+	    addVitalsButton.setLayoutX(500);
+	    addVitalsButton.setLayoutY(100);
+	    
+	    Button addAllergiesAndHealthButton = new Button("+");
+	    addAllergiesAndHealthButton.setLayoutX(500);
+	    addAllergiesAndHealthButton.setLayoutY(130);
+	    
+	    Button addImmunizationButton = new Button("+");
+	    addImmunizationButton.setLayoutX(500);
+	    addImmunizationButton.setLayoutY(160);
+	    
+	    Button addPatientHistoryButton = new Button("+");
+	    addPatientHistoryButton.setLayoutX(500);
+	    addPatientHistoryButton.setLayoutY(190);
+	    
+	    Button addPrescriptionButton = new Button("+");
+	    addPrescriptionButton.setLayoutX(500);
+	    addPrescriptionButton.setLayoutY(220);
+	    
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -477,7 +670,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(doctorView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,addVitalsButton,addAllergiesAndHealthButton,addImmunizationButton,addPatientHistoryButton,addPrescriptionButton,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -502,6 +695,20 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+	    visitSummaryLabel.setFont(new Font(12));
+	    visitSummaryLabel.setLayoutX(100);
+	    visitSummaryLabel.setLayoutY(100);
+	    
+	    Button addVisitSummaryButton = new Button("+");
+	    addVisitSummaryButton.setLayoutX(750);
+	    addVisitSummaryButton.setLayoutY(350);
+	    
+	    
+	    
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -510,7 +717,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(doctorView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,visitSummaryLabel,addVisitSummaryButton);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -535,6 +742,43 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    
+	    Label contactLabel = new Label("Contact: " + patientContact);
+	    contactLabel.setFont(new Font(12));
+	    contactLabel.setLayoutX(250);
+	    contactLabel.setLayoutY(100);
+	    
+	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
+	    emergencyContactLabel.setFont(new Font(12));
+	    emergencyContactLabel.setLayoutX(250);
+	    emergencyContactLabel.setLayoutY(130);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    allergiesHealthConcernsLabel.setFont(new Font(12));
+	    allergiesHealthConcernsLabel.setLayoutX(250);
+	    allergiesHealthConcernsLabel.setLayoutY(160);
+	    
+	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    immunizationHistoryLabel.setFont(new Font(12));
+	    immunizationHistoryLabel.setLayoutX(250);
+	    immunizationHistoryLabel.setLayoutY(190);
+	    
+	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    patientHistoryLabel.setFont(new Font(12));
+	    patientHistoryLabel.setLayoutX(250);
+	    patientHistoryLabel.setLayoutY(220);
+	    
+	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
+	    prescriptionLabel.setFont(new Font(12));
+	    prescriptionLabel.setLayoutX(250);
+	    prescriptionLabel.setLayoutY(250);
+	    
+	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(250);
+	    vitalsLabel.setLayoutY(280);
+	    
+	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
@@ -543,7 +787,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(doctorView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel);
 	    
 	    return new Scene(pane, 800, 400);
 	}
