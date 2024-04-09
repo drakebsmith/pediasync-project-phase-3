@@ -10,19 +10,19 @@ import javafx.scene.layout.VBox;
 public class ViewsInterface extends Stage
 {
 	
-	public ViewsInterface(String viewName, Stage stage) {
+	public ViewsInterface(String viewName) {
 		//test
         Scene newScene;
         
         switch (viewName) {
             case "Patient View":
-                newScene = patientView(stage);
+                newScene = patientView();
                 break;
             case "Receptionist View":
-                newScene = receptionistView(stage);
+                newScene = receptionistView();
                 break;
             case "Doctor View":
-                newScene = technicianView(stage);
+                newScene = technicianView();
                 break;
             default:
                 newScene = null;
@@ -31,13 +31,13 @@ public class ViewsInterface extends Stage
         }
 
         if (newScene != null) {
-            stage.setScene(newScene);
-            stage.show();
+            this.setScene(newScene);
+            this.show();
             
         }
     }
 	
-	private Scene patientView(Stage stage) {
+	private Scene patientView() {
 		Pane pane = new Pane();
 		
 	    Label label = new Label("Patient View");
@@ -46,7 +46,7 @@ public class ViewsInterface extends Stage
 	    return scene;
 	}
 
-	private Scene receptionistView(Stage stage) {
+	private Scene receptionistView() {
 		Pane pane = new Pane();
 		
 	    Label label = new Label("Receptionist View");
@@ -55,7 +55,7 @@ public class ViewsInterface extends Stage
 	    return scene;
 	}
 
-	private Scene technicianView(Stage stage) {
+	private Scene technicianView() {
 		Pane pane = new Pane();
 		
 	    Label label = new Label("Doctor View");
