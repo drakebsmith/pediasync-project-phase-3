@@ -7,20 +7,24 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
+	//public UserInterface UI;
+	
 	public void start(Stage primary_stage) 
 	{
-		Pane pane = new Pane();
+		new LoginInterface();
 		
-		Scene scene = new Scene(pane, 620, 400);
+		/*Pane pane = new Pane();
+		
+		UI = new UserInterface(pane);
+		
+		Scene scene = new Scene(pane, WIDTH, HEIGHT);
 		
 		primary_stage.setScene(scene);
 		
-		primary_stage.show();
+		primary_stage.show();*/
 	}
 	public static void main(String[] args) 
 	{
 		launch(args);
 	}
-	
-	//leo
 }
