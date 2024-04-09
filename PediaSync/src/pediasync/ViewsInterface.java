@@ -22,7 +22,7 @@ public class ViewsInterface extends Stage
 	private String doctorLastName;
 	
 	public ViewsInterface(String viewName, String name) {
-
+		//test
         Scene newScene;
         
         switch (viewName) {
@@ -35,7 +35,7 @@ public class ViewsInterface extends Stage
                 newScene = nurseView();
                 break;
             case "Doctor View":
-            	this.doctorName = name;
+            	this.doctorLastName = name;
                 newScene = doctorView();
                 break;
             default:
@@ -50,6 +50,8 @@ public class ViewsInterface extends Stage
             
         }
     }
+	
+//--------------------------------------Patient View----------------------------------------//
 	
 	private Scene patientView() {
 		Pane pane = new Pane();
@@ -79,8 +81,11 @@ public class ViewsInterface extends Stage
 
 
 	    Button patientInformationButton = new Button("Patient Information");
+	    patientInformationButton.setOnAction(e -> this.setScene(patient_patientInformationScene()));
 	    Button patientPortalMessagesButton = new Button("Patient Portal Messages");
+	    patientPortalMessagesButton.setOnAction(e -> this.setScene(patient_portalMessagesScene()));
 	    Button visitSummaryButton = new Button("Visit Summary");
+	    visitSummaryButton.setOnAction(e -> this.setScene(patient_visitSummaryScene()));
 	    
 	    patientInformationButton.setPrefWidth(200);
 	    patientPortalMessagesButton.setPrefWidth(200);
@@ -106,6 +111,113 @@ public class ViewsInterface extends Stage
 
 	    return scene;
 	}
+	
+	private Scene patient_patientInformationScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Information");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(patientView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	    
+	}
+
+	private Scene patient_portalMessagesScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Portal Messages");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(patientView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+
+	private Scene patient_visitSummaryScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Visit Summary");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(patientView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+
+
+//--------------------------------------Patient View----------------------------------------//
+	
+	
+//--------------------------------------Nurse View----------------------------------------//
 
 	private Scene nurseView() {
 		Pane pane = new Pane();
@@ -134,8 +246,11 @@ public class ViewsInterface extends Stage
 	    
 	    
 	    Button addPatientInformationButton = new Button("Add Patient Information");
+	    addPatientInformationButton.setOnAction(e -> this.setScene(nurse_addPatientInformationScene()));
 	    Button patientInformationButton = new Button("Patient Information");
+	    patientInformationButton.setOnAction(e -> this.setScene(nurse_patientInformationScene()));
 	    Button patientPortalMessagesButton = new Button("Patient Portal Messagesy");
+	    patientPortalMessagesButton.setOnAction(e -> this.setScene(nurse_portalMessagesScene()));
 	    
 	    addPatientInformationButton.setPrefWidth(200);
 	    patientInformationButton.setPrefWidth(200);
@@ -161,6 +276,111 @@ public class ViewsInterface extends Stage
 	    Scene scene = new Scene(pane, 800, 400);
 	    return scene;
 	}
+	
+	private Scene nurse_addPatientInformationScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Add Patient Information");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(nurseView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	private Scene nurse_patientInformationScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Information");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(nurseView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	private Scene nurse_portalMessagesScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Portal Messages");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(nurseView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	
+	
+//--------------------------------------Nurse View----------------------------------------//
+	
+//--------------------------------------Doctor View----------------------------------------//
 
 	private Scene doctorView() {
 		Pane pane = new Pane();
@@ -190,9 +410,13 @@ public class ViewsInterface extends Stage
 	    
 	    
 	    Button addPatientInformationButton = new Button("Add Patient Information");
+	    addPatientInformationButton.setOnAction(e -> this.setScene(doctor_addPatientInformationScene()));
 	    Button visitSummaryButton = new Button("Visit Summary");
+	    visitSummaryButton.setOnAction(e -> this.setScene(doctor_visitSummaryScene()));
 	    Button patientInformationButton = new Button("Patient Information");
+	    patientInformationButton.setOnAction(e -> this.setScene(doctor_patientInformationScene()));
 	    Button patientPortalMessagesButton = new Button("Patient Portal Messages");
+	    patientPortalMessagesButton.setOnAction(e -> this.setScene(doctor_portalMessagesScene()));
 	    
 	    addPatientInformationButton.setPrefWidth(200);
 	    visitSummaryButton.setPrefWidth(200);
@@ -224,4 +448,140 @@ public class ViewsInterface extends Stage
 	    
 	    return scene;
 	}
+	
+	private Scene doctor_addPatientInformationScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Add Patient Information");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(doctorView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	private Scene doctor_visitSummaryScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Visit Summary");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(doctorView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	private Scene doctor_patientInformationScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Information");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(doctorView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	private Scene doctor_portalMessagesScene() {
+		Pane pane = new Pane();
+
+	    Label pediaSyncLabel = new Label("Patient Portal Messages");
+	    pediaSyncLabel.setFont(new Font(24));
+	    pediaSyncLabel.setLayoutX(80);
+	    pediaSyncLabel.setLayoutY(20);
+	    
+	    
+	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+	    crossVertical.setFill(Color.RED);
+
+	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+	    crossHorizontal.setFill(Color.RED);
+
+	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+	    crossGroup.setLayoutX(50);
+	    crossGroup.setLayoutY(12);
+	    
+	    Button backButton = new Button("<-");
+	    backButton.setFont(new Font(12));
+	    backButton.setLayoutX(20);
+	    backButton.setLayoutY(350);
+	    backButton.setOnAction(e -> {
+	        this.setScene(doctorView());
+	    });
+	    
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
+	    
+	    return new Scene(pane, 800, 400);
+	}
+	
+	
+	
+//--------------------------------------Doctor View----------------------------------------//
 }
