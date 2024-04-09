@@ -17,43 +17,33 @@ public class LoginInterface extends Stage
 {
 	private static final int WIDTH = 600;
 	
-	private static final int HEIGHT = 400; 
+	private static final int HEIGHT = 400;
+	
+	private String username;
+	
+	private String password;
+	
+	private String first_name;
+	
+	private String last_name;
+	
+	private String date_of_birth;
+	
+	public Filer file;
 	
 	public LoginInterface()
 	{
-		System.out.println("It worked!");
-		
-		this.setTitle("Tester");
-		
 		Pane pane = new Pane();
 		
-		Scene scene = new Scene(pane, 600, 400);
+		Line line = new Line(275, 0, 275, 400);
 		
-		this.setScene(scene);
+		Rectangle cross_vertical = new Rectangle(60, 150, 25, 75);
 		
-		this.show();
+		cross_vertical.setFill(Color.RED);
 		
-		Button test = new Button("Sign In");
+		Rectangle cross_horizontal = new Rectangle(35, 175, 75, 25);
 		
-		test.setLayoutX(387);
-		
-		test.setLayoutY(235);
-		
-		test.setPrefSize(100, 30);
-		
-		pane.getChildren().add(test);
-		
-		test.setOnAction(e -> {});
-		
-		/*Line line = new Line(275, 0, 275, 400);
-		
-		Rectangle crossVertical = new Rectangle(60, 150, 25, 75);
-		
-		crossVertical.setFill(Color.RED);
-		
-		Rectangle crossHorizontal = new Rectangle(35, 175, 75, 25);
-		
-		crossHorizontal.setFill(Color.RED);
+		cross_horizontal.setFill(Color.RED);
 		
 		Text name = new Text("PediaSync");
 		
@@ -65,7 +55,7 @@ public class LoginInterface extends Stage
 		
 		name.setLayoutY(190);
 		
-		Group left_side = new Group(line, crossVertical, crossHorizontal, name);
+		Group left_side = new Group(line, cross_vertical, cross_horizontal, name);
 		
 		Text username_text = new Text("Username:");
 		
@@ -111,18 +101,18 @@ public class LoginInterface extends Stage
 		
 		sign_in.setPrefSize(100, 30);
 		
-		sign_in.setOnAction(new EventHandler<ActionEvent>() 
-		{
-			public void handle(ActionEvent event) 
+		sign_in.setOnAction(e -> {
+			
+			if(!(username_input.getText().isEmpty())) 
 			{
-				if(!(username_input.getText().isEmpty())) 
-				{
-				}
-				if(!(password_input.getText().isEmpty())) 
-				{
-				}
+				username = username_input.getText();
+			}
+			if(!(password_input.getText().isEmpty())) 
+			{
+				password = password_input.getText();
 			}
 		});
+		
 		Button sign_up = new Button("Sign Up");
 		
 		sign_up.setLayoutX(387);
@@ -135,91 +125,118 @@ public class LoginInterface extends Stage
 		
 		pane.getChildren().addAll(left_side, right_side);
 		
-		sign_up.setOnAction(new EventHandler<ActionEvent>() 
-		{
-			public void handle(ActionEvent event) 
-			{	
+		sign_up.setOnAction(e -> {
+			
+			right_side.getChildren().clear();
+				
+			Text first_name_text = new Text("First Name:");
+				
+			first_name_text.setScaleX(1.75);
+				
+			first_name_text.setScaleY(1.75);
+				
+			first_name_text.setLayoutX(408);
+				
+			first_name_text.setLayoutY(75);
+				
+			TextField first_name_input = new TextField();
+				
+			first_name_input.setLayoutX(365);
+				
+			first_name_input.setLayoutY(100);
+				
+			first_name_input.setPromptText("First name");
+				
+			Text last_name_text = new Text("Last Name:");
+				
+			last_name_text.setScaleX(1.75);
+				
+			last_name_text.setScaleY(1.75);
+				
+			last_name_text.setLayoutX(408);
+				
+			last_name_text.setLayoutY(155);
+				
+			TextField last_name_input = new TextField();
+				
+			last_name_input.setLayoutX(365);
+				
+			last_name_input.setLayoutY(180);
+				
+			last_name_input.setPromptText("Last name");
+				
+			Text date_of_birth_text = new Text("Date of Birth:");
+				
+			date_of_birth_text.setScaleX(1.75);
+				
+			date_of_birth_text.setScaleY(1.75);
+				
+			date_of_birth_text.setLayoutX(403);
+				
+			date_of_birth_text.setLayoutY(235);
+				
+			TextField date_of_birth_input = new TextField();
+				
+			date_of_birth_input.setLayoutX(365);
+				
+			date_of_birth_input.setLayoutY(260);
+				
+			date_of_birth_input.setPromptText("mm/dd/yyyy");
+				
+			Button create_account = new Button("Create Account");
+				
+			create_account.setLayoutX(388);
+				
+			create_account.setLayoutY(315);
+				
+			create_account.setPrefSize(100, 30);
+			
+			right_side.getChildren().addAll(first_name_text, first_name_input, last_name_text, last_name_input, date_of_birth_text, date_of_birth_input, create_account);
+				
+			create_account.setOnAction(a -> 
+			{
 				right_side.getChildren().clear();
 				
-				Text first_name_text = new Text("First Name:");
+				right_side.getChildren().addAll(username_text, username_input, password_text, password_input, sign_in, sign_up);
 				
-				first_name_text.setScaleX(1.5);
+				int count = 0;
 				
-				first_name_text.setScaleY(1.5);
-				
-				first_name_text.setLayoutX(415);
-				
-				first_name_text.setLayoutY(35);
-				
-				TextField first_name_input = new TextField();
-				
-				first_name_input.setLayoutX(370);
-				
-				first_name_input.setLayoutY(55);
-				
-				first_name_input.setPromptText("First name");
-				
-				Text last_name_text = new Text("Last Name:");
-				
-				last_name_text.setScaleX(1.5);
-				
-				last_name_text.setScaleY(1.5);
-				
-				last_name_text.setLayoutX(415);
-				
-				last_name_text.setLayoutY(110);
-				
-				TextField last_name_input = new TextField();
-				
-				last_name_input.setLayoutX(370);
-				
-				last_name_input.setLayoutY(130);
-				
-				last_name_input.setPromptText("Last name");
-				
-				Text date_of_birth_text = new Text("Date of Birth:");
-				
-				date_of_birth_text.setScaleX(1.5);
-				
-				date_of_birth_text.setScaleY(1.5);
-				
-				date_of_birth_text.setLayoutX(410);
-				
-				date_of_birth_text.setLayoutY(185);
-				
-				TextField date_of_birth_input = new TextField();
-				
-				date_of_birth_input.setLayoutX(370);
-				
-				date_of_birth_input.setLayoutY(205);
-				
-				date_of_birth_input.setPromptText("mm/dd/yyyy");
-				
-				Button create_account = new Button("Create Account");
-				
-				create_account.setLayoutX(395);
-				
-				create_account.setLayoutY(255);
-				
-				create_account.setPrefSize(100, 30);
-				
-				create_account.setOnAction(new EventHandler<ActionEvent>() 
+				if(!(first_name_input.getText().isEmpty())) 
 				{
-					public void handle(ActionEvent event) 
-					{
-						if(!(first_name_input.getText().isEmpty())) 
-						{
-						}
-						if(!(last_name_input.getText().isEmpty())) 
-						{
-						}
-						if(!(date_of_birth_input.getText().isEmpty())) 
-						{
-						}
-					}
-				});
-				right_side.getChildren().addAll(first_name_text, first_name_input, last_name_text, last_name_input, date_of_birth_text, date_of_birth_input, create_account);
-			}
-		});*/
+					first_name = first_name_input.getText();
+					
+					count++;
+				}						
+				if(!(last_name_input.getText().isEmpty())) 
+				{
+					last_name = last_name_input.getText();
+					
+					count++;
+				}
+				if(!(date_of_birth_input.getText().isEmpty())) 
+				{
+					date_of_birth = date_of_birth_input.getText();
+					
+					count++;
+				}
+				if(count == 3) 
+				{
+					System.out.println("Count: " + count);
+					
+					createAccount();
+				}
+			});
+		});
+		Scene scene = new Scene(pane, WIDTH, HEIGHT);
+		
+		this.setScene(scene);
+		
+		this.show();
+	}
+	public void createAccount() 
+	{
+		file = new Filer();
+		
+		file.createFile(first_name, last_name, date_of_birth);
 	}
 }
