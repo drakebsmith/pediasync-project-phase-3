@@ -1,21 +1,67 @@
 package pediasync;
 
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+
 
 public class ViewsInterface extends Stage
 {
-	public ViewsInterface() 
-	{
+	
+	public ViewsInterface(String viewName, Stage stage) {
+		
+        Scene newScene;
+        
+        switch (viewName) {
+            case "Patient View":
+                newScene = patientView(stage);
+                break;
+            case "Receptionist View":
+                newScene = receptionistView(stage);
+                break;
+            case "Doctor View":
+                newScene = technicianView(stage);
+                break;
+            default:
+                newScene = null;
+                break;
+                
+        }
+
+        if (newScene != null) {
+            stage.setScene(newScene);
+            stage.show();
+            
+        }
+    }
+	
+	private Scene patientView(Stage stage) {
+		Pane pane = new Pane();
+		
+	    Label label = new Label("Patient View");
+	    pane.getChildren().add(label);
+	    Scene scene = new Scene(pane, 800, 400);
+	    return scene;
+	}
+
+	private Scene receptionistView(Stage stage) {
+		Pane pane = new Pane();
+		
+	    Label label = new Label("Receptionist View");
+	    pane.getChildren().add(label);
+	    Scene scene = new Scene(pane, 800, 400);
+	    return scene;
+	}
+
+	private Scene technicianView(Stage stage) {
+		Pane pane = new Pane();
+		
+	    Label label = new Label("Doctor View");
+	    pane.getChildren().add(label);
+	    Scene scene = new Scene(pane, 800, 400);
+	    
+	    return scene;
 	}
 }
