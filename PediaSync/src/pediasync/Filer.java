@@ -14,7 +14,7 @@ public class Filer
 	{
 		try 
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("[filepath here]\\" + username + "_PatientInfo.txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
 			
 			writer.write(password + "\n" + first_name + "\n" + last_name + "\n" + date_of_birth);
 			
@@ -75,7 +75,7 @@ public class Filer
 	{
 		try 
 		{
-			BufferedReader reader = new BufferedReader(new FileReader("[filepath here]\\" + username + "_PatientInfo.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
 			
 			String password = reader.readLine();
 			
@@ -94,7 +94,7 @@ public class Filer
 	{
 		try 
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("[filepath here]\\" + username + "_PatientInfo.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
 			
 			// This commented out line is here just in case we want to include descriptors in the patients' files
 			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
@@ -108,4 +108,29 @@ public class Filer
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public ArrayList<String> readFile(String username) {
+        ArrayList<String> patientInfo = new ArrayList<>();
+        try {
+        	
+            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
+
+            String line;
+            while((line = reader.readLine()) != null) {
+                patientInfo.add(line);
+                
+            }
+            reader.close();
+            
+        } catch(IOException e) {
+        	
+            e.printStackTrace();
+            
+        }
+        
+        return patientInfo;
+    }
+	
+	
 }

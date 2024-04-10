@@ -1,6 +1,9 @@
 package pediasync;
 
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -17,7 +20,9 @@ import javafx.scene.control.Label;
 
 public class ViewsInterface extends Stage
 {
+	String username = "";
 	String patientName = "";
+	String birthdate = "";
 	String patientContact = "";
 	String patientEmergencyContact = "";
 	String patientAllergiesHealthConcerns = "";
@@ -33,10 +38,14 @@ public class ViewsInterface extends Stage
 	private String nurseName = "";
 	private String doctorLastName = "";
 	
-	Filer file; // Filer object for testing the Filer and ViewsInterface connections
 	
-	public ViewsInterface(String viewName) {
+	
+
+	
+	public ViewsInterface(String viewName, String username) {
 		//test
+		this.username = username;
+        readFile();
         Scene newScene;
         
         switch (viewName) {
@@ -61,6 +70,24 @@ public class ViewsInterface extends Stage
             
         }
     }
+	
+	private void readFile() {
+	    Filer filer = new Filer();
+	    ArrayList<String> patientInfo = filer.readFile(this.username);
+
+	    if (patientInfo.size() >= 9) {
+	        patientName = patientInfo.get(1);
+	        birthdate = patientInfo.get(2);
+	        patientContact = patientInfo.get(3);
+	        patientEmergencyContact = patientInfo.get(4);
+	        patientAllergiesHealthConcerns = patientInfo.get(5);
+	        patientImmunization = patientInfo.get(6);
+	        patientHistory = patientInfo.get(7);
+	        patientPrescription = patientInfo.get(8);
+	        patientVitals = patientInfo.get(9);
+	        visitSummary = patientInfo.get(10);
+	    }
+	}
 	
 //--------------------------------------Patient View----------------------------------------//
 	
@@ -124,12 +151,6 @@ public class ViewsInterface extends Stage
 	}
 	
 	private Scene patient_patientInformationScene() {
-		
-		// Lines 129 and 131 were added for testing the Filer and ViewsInterface connections
-		file = new Filer();
-		
-		file.writeFile("jdoe135", "123-456-7890", "098-765-4321", "Gluten allergy", "Invincible", "No history", "Advil", "Alive");
-		
 		Pane pane = new Pane();
 
 	    Label pediaSyncLabel = new Label("Patient Information");

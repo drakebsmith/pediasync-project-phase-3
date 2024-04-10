@@ -131,7 +131,7 @@ public class LoginInterface extends Stage
 			{
 				this.hide();
 				
-				new ViewsInterface("Patient View");
+				new ViewsInterface("Patient View",username);
 			}
 			else 
 			{
