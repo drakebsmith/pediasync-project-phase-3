@@ -33,6 +33,8 @@ public class ViewsInterface extends Stage
 	private String nurseName = "";
 	private String doctorLastName = "";
 	
+	Filer file; // Filer object for testing the Filer and ViewsInterface connections
+	
 	public ViewsInterface(String viewName) {
 		//test
         Scene newScene;
@@ -122,6 +124,12 @@ public class ViewsInterface extends Stage
 	}
 	
 	private Scene patient_patientInformationScene() {
+		
+		// Lines 129 and 131 were added for testing the Filer and ViewsInterface connections
+		file = new Filer();
+		
+		file.writeFile("jdoe135", "123-456-7890", "098-765-4321", "Gluten allergy", "Invincible", "No history", "Advil", "Alive");
+		
 		Pane pane = new Pane();
 
 	    Label pediaSyncLabel = new Label("Patient Information");

@@ -103,17 +103,40 @@ public class LoginInterface extends Stage
 		sign_in.setPrefSize(100, 30);
 		
 		sign_in.setOnAction(e -> 
-		{	
-			if(!(username_input.getText().isEmpty())) 
+		{
+			file = new Filer();
+			
+			String entered_username = username_input.getText();
+			
+			String entered_password = password_input.getText();
+			
+			int i = 0;
+			
+			if(!(entered_username.isEmpty())) 
 			{
-				username = username_input.getText();
+				i++;
 			}
-			if(!(password_input.getText().isEmpty())) 
+			if(!(entered_password.isEmpty())) 
 			{
-				password = password_input.getText();
+				if(file.authenticate(entered_username).equals(entered_password))
+				{
+					i++;
+				}
 			}
-			System.out.print("\n" + createID());
-			//this.hide();
+			username_input.clear();
+			
+			password_input.clear();
+			
+			if(i == 2) 
+			{
+				this.hide();
+				
+				new ViewsInterface("Patient View");
+			}
+			else 
+			{
+				// this else statement will be used for error catching
+			}
 		});
 		
 		Button sign_up = new Button("Sign Up");
@@ -127,6 +150,8 @@ public class LoginInterface extends Stage
 		Group right_side = new Group(username_text, username_input, password_text, password_input, sign_in, sign_up);
 		
 		pane.getChildren().addAll(left_side, right_side);
+		
+		this.setTitle("Login");
 		
 		sign_up.setOnAction(e -> 
 		{	
@@ -203,7 +228,9 @@ public class LoginInterface extends Stage
 			create_account.setPrefSize(100, 30);
 			
 			right_side.getChildren().addAll(first_name_text, first_name_input, last_name_text, last_name_input, date_of_birth_text, date_of_birth_input, next);
-				
+			
+			this.setTitle("Sign Up");
+			
 			next.setOnAction(r -> 
 			{
 				int i = 0;
@@ -250,7 +277,7 @@ public class LoginInterface extends Stage
 						}
 						if(j == 2) 
 						{
-							//createAccount();
+							createAccount();
 							
 							username_input.clear();
 							
@@ -259,6 +286,8 @@ public class LoginInterface extends Stage
 							right_side.getChildren().clear();
 							
 							right_side.getChildren().addAll(username_text, username_input, password_text, password_input, sign_in, sign_up);
+							
+							this.setTitle("Login");
 						}
 					});
 				}

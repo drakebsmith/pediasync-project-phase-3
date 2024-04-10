@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Filer
 {
-	// Method that creates a file with the patient's basic information.
+	// *REPLACE [filepath here] WITH A FILEPATH OF YOUR CHOICE FOR TESTING. Example: "C:\\Users\\[the name you chose for your OS]\\Desktop\\" (assuming you're on a Windows machine).
 	public void createFile(String first_name, String last_name, String date_of_birth, String username, String password) 
 	{
 		try 
@@ -25,30 +25,29 @@ public class Filer
 			e.printStackTrace();
 		}
 	}
-	/*public ArrayList<String> readFile(String id, int flag) 
+	
+	// Still not in-use. Left commented in case we need it
+	/*public ArrayList<String> readFile(String username) 
 	{
 		try 
 		{
 			ArrayList<String> list = null;
 			
-			if(flag == 0) 
+			BufferedReader reader = new BufferedReader(new FileReader("[filepath here]\\" + username + "_PatientInfo.txt"));
+				
+			String line;
+				
+			int count = 0;
+				
+			list = new ArrayList<String>();
+		
+			while((line = reader.readLine()) != null && count <= 2) 
 			{
-				BufferedReader reader_one = new BufferedReader(new FileReader("[filepath here]\\" + id + "_PatientInfo.txt"));
+				list.add(line);
 				
-				String line;
-				
-				int count = 0;
-				
-				list = new ArrayList<String>();
-				
-				while((line = reader_one.readLine()) != null && count <= 2) 
-				{
-					list.add(line);
-					
-					count++;
-				}
-				reader_one.close();
+				count++;
 			}
+			reader.close();
 			else if(flag == 1) 
 			{
 				BufferedReader reader_two = new BufferedReader(new FileReader("[filepath here]\\" + id + "CTResults.txt"));
@@ -72,4 +71,41 @@ public class Filer
 			return null;
 		}
 	}*/
+	public String authenticate(String username) 
+	{
+		try 
+		{
+			BufferedReader reader = new BufferedReader(new FileReader("[filepath here]\\" + username + "_PatientInfo.txt"));
+			
+			String password = reader.readLine();
+			
+			reader.close();
+			
+			return password;
+		}
+		catch(IOException e) 
+		{
+			//e.printStackTrace();
+			
+			return "";
+		}
+	}
+	public void writeFile(String username, String contact, String emergency_contact, String health_concerns, String immunization, String history, String prescription, String vitals) 
+	{
+		try 
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter("[filepath here]\\" + username + "_PatientInfo.txt", true));
+			
+			// This commented out line is here just in case we want to include descriptors in the patients' files
+			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
+					
+			writer.write("\n" + contact + "\n" + emergency_contact + "\n" + health_concerns + "\n" + immunization + "\n" + history + "\n" + prescription + "\n" + vitals);
+			
+			writer.close();
+		}
+		catch(IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
 }
