@@ -472,7 +472,7 @@ public class ViewsInterface extends Stage
 	    TextField patientUsernameField = new TextField(patientUsername);
 	    patientUsernameField.setFont(new Font(12));
 	    patientUsernameField.setLayoutX(250);
-	    patientUsernameField.setLayoutY(400);
+	    patientUsernameField.setLayoutY(350);
 	    
 	    
 	    Label contactLabel = new Label("Contact: " + patientContact);
