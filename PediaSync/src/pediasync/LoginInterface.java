@@ -3,8 +3,6 @@ package pediasync;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -17,6 +15,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+// Class for handling the sign in and sign up processes
 public class LoginInterface extends Stage
 {
 	private static final int WIDTH = 600;
@@ -37,6 +36,34 @@ public class LoginInterface extends Stage
 	
 	public Filer file;
 	
+	// Method for create a five-digit unique ID for the user upon account creation
+	private int createID(int flag) 
+	{
+		Random random_number = new Random();
+		
+		if(flag == 0) 
+		{
+			return (10000 + random_number.nextInt(10000));
+		}
+		else if(flag == 1) 
+		{
+			return (20000 + random_number.nextInt(10000));
+		}
+		else
+		{
+			return(30000 + random_number.nextInt(10000));
+		}
+	}
+	
+	// Method that calls the Filer class to create users' system files
+	private void createAccount() 
+	{
+		file = new Filer();
+		
+		file.createFile(String.valueOf(id), password, first_name, last_name, date_of_birth, username);
+	}
+	
+	// Method for implementing the GUI and its functionality
 	public LoginInterface()
 	{
 		Pane pane = new Pane();
@@ -99,6 +126,18 @@ public class LoginInterface extends Stage
 		
 		password_input.setPromptText("Password");
 		
+		Text error = new Text();
+		
+		error.setScaleX(1);
+		
+		error.setScaleY(1);
+		
+		error.setLayoutX(282);
+		
+		error.setLayoutY(365);
+		
+		error.setFill(Color.RED);
+		
 		Button sign_in = new Button("Sign In");
 		
 		sign_in.setLayoutX(387);
@@ -117,7 +156,7 @@ public class LoginInterface extends Stage
 			
 			int i = 0;
 			
-			if(!(entered_username.isEmpty()) && entered_username.length() >= 6 && entered_username.length() <= 8) 
+			if(!(entered_username.isEmpty())) 
 			{	
 				i++;
 			}
@@ -131,31 +170,35 @@ public class LoginInterface extends Stage
 			
 			if(i == 2) 
 			{	
-				ArrayList<String> id_check = file.readFile(entered_username);
+				ArrayList<String> user_id = file.readFile(entered_username);
 				
-				char check = id_check.get(0).charAt(0);
+				char identifier = user_id.get(0).charAt(0);
 				
 				String view = "";
 				
-				if(check == '1')
+				if(identifier == '1')
 				{
 					view = "Patient View";
 				}
-				if(check == '2')
+				if(identifier == '2')
 				{
 					view = "Nurse View";
 				}
-				if(check == '3') 
+				if(identifier == '3') 
 				{
 					view = "Doctor View";
 				}
+				pane.getChildren().remove(error);
+				
 				this.hide();
 				
 				new ViewsInterface(view, entered_username);
 			}
 			else 
 			{
-				// this else statement will be used for error catching
+				error.setText("Error: at least one field is empty or username does not exist");
+				
+				pane.getChildren().add(error);
 			}
 		});
 		
@@ -241,31 +284,31 @@ public class LoginInterface extends Stage
 			
 			ToggleGroup user_type = new ToggleGroup();
 			
-			RadioButton patient = new RadioButton("Patient");
+			RadioButton patient_button = new RadioButton("Patient");
 			
-			patient.setToggleGroup(user_type);
+			patient_button.setToggleGroup(user_type);
 			
-			patient.setLayoutX(405);
+			patient_button.setLayoutX(405);
 			
-			patient.setLayoutY(220);
+			patient_button.setLayoutY(220);
 			
-			RadioButton nurse = new RadioButton("Nurse");
+			RadioButton nurse_button = new RadioButton("Nurse");
 			
-			nurse.setToggleGroup(user_type);
+			nurse_button.setToggleGroup(user_type);
 			
-			nurse.setLayoutX(405);
+			nurse_button.setLayoutX(405);
 			
-			nurse.setLayoutY(250);
+			nurse_button.setLayoutY(250);
 			
-			RadioButton doctor = new RadioButton("Doctor");
+			RadioButton doctor_button = new RadioButton("Doctor");
 			
-			doctor.setToggleGroup(user_type);
+			doctor_button.setToggleGroup(user_type);
 			
-			doctor.setLayoutX(405);
+			doctor_button.setLayoutX(405);
 			
-			doctor.setLayoutY(280);
+			doctor_button.setLayoutY(280);
 			
-			Group radiobuttons = new Group(patient, nurse, doctor);
+			Group radiobuttons = new Group(patient_button, nurse_button, doctor_button);
 				
 			Button create_account = new Button("Create Account");
 				
@@ -283,75 +326,99 @@ public class LoginInterface extends Stage
 			{
 				int i = 0;
 				
-				if(!(first_name_input.getText().isEmpty())) 
+				String entered_first_name = first_name_input.getText();
+				
+				String entered_last_name = last_name_input.getText();
+				
+				String entered_date_of_birth = date_of_birth_input.getText();
+				
+				if(!(entered_first_name.isEmpty())) 
 				{
-					first_name = first_name_input.getText();
+					first_name = entered_first_name;
 					
 					i++;
 				}						
-				if(!(last_name_input.getText().isEmpty())) 
+				if(!(entered_last_name.isEmpty())) 
 				{
-					last_name = last_name_input.getText();
+					last_name = entered_last_name;
 					
 					i++;
 				}
-				if(!(date_of_birth_input.getText().isEmpty())) 
+				if(!(entered_date_of_birth.isEmpty())) 
 				{
-					date_of_birth = date_of_birth_input.getText();
+					date_of_birth = entered_date_of_birth;
 					
 					i++;
 				}
+				first_name_input.clear();
+				
+				last_name_input.clear();
+				
+				date_of_birth_input.clear();
+				
 				if(i == 3) 
 				{
+					pane.getChildren().remove(error);
+					
 					right_side.getChildren().clear();
 					
 					right_side.getChildren().addAll(username_text, username_input, password_text, password_input, radiobuttons, create_account);
 					
 					create_account.setOnAction(t ->
 					{
+						file = new Filer();
+						
 						int j = 0;
 						
-						int id_flag = 0;
+						int flag = 0;
 						
-						if(!(username_input.getText().isEmpty())) 
+						String entered_username = username_input.getText();
+						
+						String entered_password = password_input.getText();
+						
+						if(!(entered_username.isEmpty()) && file.checkUsername(entered_username) == 0) 
 						{
-							username = username_input.getText();
-							
-							j++;
-						}						
-						if(!(password_input.getText().isEmpty())) 
-						{
-							password = password_input.getText();
-							
-							j++;
-						}
-						if(patient.isSelected()) 
-						{
-							id_flag = 0;
+							username = entered_username;
 							
 							j++;
 						}
-						if(nurse.isSelected()) 
+						if(!(entered_password.isEmpty())) 
 						{
-							id_flag = 1;
+							password = entered_password;
 							
 							j++;
 						}
-						if(doctor.isSelected()) 
+						if(patient_button.isSelected()) 
 						{
-							id_flag = 2;
+							flag = 0;
 							
 							j++;
 						}
+						if(nurse_button.isSelected()) 
+						{
+							flag = 1;
+							
+							j++;
+						}
+						if(doctor_button.isSelected()) 
+						{
+							flag = 2;
+							
+							j++;
+						}
+						username_input.clear();
+						
+						password_input.clear();
+						
+						user_type.selectToggle(null);
+						
 						if(j == 3) 
 						{
-							id = createID(id_flag);
+							pane.getChildren().remove(error);
+							
+							id = createID(flag);
 							
 							createAccount();
-							
-							username_input.clear();
-							
-							password_input.clear();
 							
 							right_side.getChildren().clear();
 							
@@ -359,7 +426,27 @@ public class LoginInterface extends Stage
 							
 							this.setTitle("Login");
 						}
+						else 
+						{
+							error.setLayoutX(295);
+							
+							error.setLayoutY(375);
+							
+							error.setText("Error: at least one is empty or username already exists");
+							
+							pane.getChildren().add(error);
+						}
 					});
+				}
+				else 
+				{
+					error.setLayoutX(355);
+					
+					error.setLayoutY(375);
+					
+					error.setText("Error: at least one field is empty");
+					
+					pane.getChildren().add(error);
 				}
 			});
 			
@@ -370,28 +457,5 @@ public class LoginInterface extends Stage
 		this.setScene(scene);
 		
 		this.show();
-	}
-	private int createID(int flag) 
-	{
-		Random random_number = new Random();
-		
-		if(flag == 0) 
-		{
-			return (10000 + random_number.nextInt(10000));
-		}
-		else if(flag == 1) 
-		{
-			return (20000 + random_number.nextInt(10000));
-		}
-		else
-		{
-			return(30000 + random_number.nextInt(10000));
-		}
-	}
-	private void createAccount() 
-	{
-		file = new Filer();
-		
-		file.createFile(String.valueOf(id), password, first_name, last_name, date_of_birth, username);
 	}
 }
