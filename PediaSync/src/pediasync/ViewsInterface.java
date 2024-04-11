@@ -537,7 +537,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(nurseView());
 	    });
 	    
-	    pane.getChildren().addAll(contactLabel,emergencyContactLabel,contactField,emergencyContactField,pediaSyncLabel,crossGroup,backButton,add,vitalsLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,vitalsField,allergiesHealthConcernsField,immunizationHistoryField,patientHistoryField);
+	    pane.getChildren().addAll(patientUsernameField,contactLabel,emergencyContactLabel,contactField,emergencyContactField,pediaSyncLabel,crossGroup,backButton,add,vitalsLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,vitalsField,allergiesHealthConcernsField,immunizationHistoryField,patientHistoryField);
 	    
 	    return new Scene(pane, 800, 400);
 	}
