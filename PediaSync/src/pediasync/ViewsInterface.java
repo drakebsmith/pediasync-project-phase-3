@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -39,6 +40,8 @@ public class ViewsInterface extends Stage
 	String visitSummary = "";
 	
 	String date = "4/9/2004";
+	
+	int flag = 0;
 	
 	
 	private String nurseName = "";
@@ -101,19 +104,25 @@ public class ViewsInterface extends Stage
 //--------------------------------------Patient View----------------------------------------//
 	
 	private Scene patientView() {
+		Text error = new Text();
 		
 		file = new Filer();
 		
 		information = file.readFile(username);
 		
 		//fix
-		patientName = information.get(2);
-        patientContact = information.get(3);
-        patientEmergencyContact = information.get(4);
-        patientAllergiesHealthConcerns = information.get(5);
-        patientImmunization = information.get(6);
-        patientVitals = information.get(8);
-        patientPrescription = information.get(9);
+		if(flag == 0) {
+			this.setScene(patientView());
+		}
+		else {
+			patientName = information.get(2);
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);
+		}
         
 		Pane pane = new Pane();
 
@@ -330,13 +339,18 @@ public class ViewsInterface extends Stage
 		
 		nurseName = information.get(3);
 		
-		patientName = information.get(2);
-        patientContact = information.get(3);
-        patientEmergencyContact = information.get(4);
-        patientAllergiesHealthConcerns = information.get(5);
-        patientImmunization = information.get(6);
-        patientVitals = information.get(8);
-        patientPrescription = information.get(9);
+		if(flag == 0) {
+			this.setScene(nurseView());
+		}
+		else {
+			patientName = information.get(2);
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);
+		}
 		
 		
 		Pane pane = new Pane();
@@ -633,13 +647,18 @@ public class ViewsInterface extends Stage
 		
 		doctorLastName = information.get(3);
 		
-		patientName = information.get(2);
-        patientContact = information.get(3);
-        patientEmergencyContact = information.get(4);
-        patientAllergiesHealthConcerns = information.get(5);
-        patientImmunization = information.get(6);
-        patientVitals = information.get(8);
-        patientPrescription = information.get(9);
+		if(flag == 0) {
+			this.setScene(patientView());
+		}
+		else {
+			patientName = information.get(2);
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);
+		}
 		
 		Pane pane = new Pane();
 		
@@ -745,7 +764,7 @@ public class ViewsInterface extends Stage
 	    add.setOnAction(e -> {
 	        patientPrescription = prescriptionField.getText();
 	        
-	        
+	        flag = 1;
 	        
 	        file.doctorWriteFile(username, patientPrescription);
 	       
