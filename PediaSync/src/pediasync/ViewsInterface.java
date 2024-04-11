@@ -104,25 +104,13 @@ public class ViewsInterface extends Stage
 //--------------------------------------Patient View----------------------------------------//
 	
 	private Scene patientView() {
-		Text error = new Text();
 		
 		file = new Filer();
 		
 		information = file.readFile(username);
 		
+		patientName = information.get(2);
 		//fix
-		if(flag == 0) {
-			this.setScene(patientView());
-		}
-		else {
-			patientName = information.get(2);
-	        patientContact = information.get(5);
-	        patientEmergencyContact = information.get(6);
-	        patientAllergiesHealthConcerns = information.get(7);
-	        patientImmunization = information.get(8);
-	        patientVitals = information.get(9);
-	        patientPrescription = information.get(10);
-		}
         
 		Pane pane = new Pane();
 
@@ -184,6 +172,19 @@ public class ViewsInterface extends Stage
 	
 	private Scene patient_patientInformationScene() {
 		Pane pane = new Pane();
+		
+		if(flag == 1) {
+			
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);this.setScene(patientView());
+		}
+		else {
+			this.setScene(patientView());
+		}
 
 	    Label pediaSyncLabel = new Label("Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
@@ -339,19 +340,7 @@ public class ViewsInterface extends Stage
 		
 		nurseName = information.get(3);
 		
-		if(flag == 0) {
-			this.setScene(nurseView());
-		}
-		else {
-			patientName = information.get(2);
-	        patientContact = information.get(5);
-	        patientEmergencyContact = information.get(6);
-	        patientAllergiesHealthConcerns = information.get(7);
-	        patientImmunization = information.get(8);
-	        patientVitals = information.get(9);
-	        patientPrescription = information.get(10);
-		}
-		
+
 		
 		Pane pane = new Pane();
 		
@@ -412,6 +401,19 @@ public class ViewsInterface extends Stage
 	
 	private Scene nurse_addPatientInformationScene() {
 		Pane pane = new Pane();
+		
+		if(flag == 1) {
+			
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);this.setScene(patientView());
+		}
+		else {
+			this.setScene(nurseView());
+		}
 
 	    Label pediaSyncLabel = new Label("Add Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
@@ -647,19 +649,7 @@ public class ViewsInterface extends Stage
 		
 		doctorLastName = information.get(3);
 		
-		if(flag == 0) {
-			this.setScene(patientView());
-		}
-		else {
-			patientName = information.get(2);
-	        patientContact = information.get(5);
-	        patientEmergencyContact = information.get(6);
-	        patientAllergiesHealthConcerns = information.get(7);
-	        patientImmunization = information.get(8);
-	        patientVitals = information.get(9);
-	        patientPrescription = information.get(10);
-		}
-		
+
 		Pane pane = new Pane();
 		
 		Label pediaSyncLabel = new Label("PediaSync");
@@ -728,6 +718,19 @@ public class ViewsInterface extends Stage
 	
 	private Scene doctor_addPatientInformationScene() {
 		Pane pane = new Pane();
+		
+		if(flag == 1) {
+			
+	        patientContact = information.get(5);
+	        patientEmergencyContact = information.get(6);
+	        patientAllergiesHealthConcerns = information.get(7);
+	        patientImmunization = information.get(8);
+	        patientVitals = information.get(9);
+	        patientPrescription = information.get(10);this.setScene(patientView());
+		}
+		else {
+			this.setScene(doctorView());
+		}
 
 	    Label pediaSyncLabel = new Label("Add Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
