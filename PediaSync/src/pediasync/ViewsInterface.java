@@ -28,6 +28,7 @@ public class ViewsInterface extends Stage
 	
 	private ArrayList<String> information;
 	
+	String patientUsername = "";
 	String patientName = "";
 	String birthdate = "";
 	String patientContact = "";
@@ -462,6 +463,11 @@ public class ViewsInterface extends Stage
 	    patientHistoryField.setLayoutX(250);
 	    patientHistoryField.setLayoutY(250);
 	    
+	    TextField patientUsernameField = new TextField(patientUsername);
+	    patientUsernameField.setFont(new Font(12));
+	    patientUsernameField.setLayoutX(250);
+	    patientUsernameField.setLayoutY(400);
+	    
 	    
 	    Label contactLabel = new Label("Contact: " + patientContact);
 	    contactLabel.setFont(new Font(12));
@@ -507,8 +513,10 @@ public class ViewsInterface extends Stage
 	        patientImmunization = immunizationHistoryField.getText();
 	        patientHistory = patientHistoryField.getText();
 	        
+	        patientUsername = patientUsernameField.getText();
 	        
-	        file.nurseWriteFile(username, patientContact, patientEmergencyContact, patientAllergiesHealthConcerns, patientImmunization, patientHistory, patientVitals);
+	        
+	        file.nurseWriteFile(patientUsername, patientContact, patientEmergencyContact, patientAllergiesHealthConcerns, patientImmunization, patientHistory, patientVitals);
 	       
 	    });
 	    

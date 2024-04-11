@@ -90,6 +90,8 @@ public class Filer
 				reader.readLine();
 				
 				result = reader.readLine();
+				
+				//System.out.println(result);
 			}
 			reader.close();
 			
@@ -108,7 +110,7 @@ public class Filer
 		{
 			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt", true));
 			
 			// This commented out line is here just in case we want to include descriptors in the patients' files
 			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
@@ -129,7 +131,7 @@ public class Filer
 		{
 			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt", true));
 			
 			// This commented out line is here just in case we want to include descriptors in the patients' files
 			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
@@ -143,23 +145,7 @@ public class Filer
 			e.printStackTrace();
 		}
 	}
-	public int checkUsername(String username) 
-	{
-		try 
-		{
-			BufferedReader reader = new BufferedReader(new FileReader(username + "_UserInfo.txt"));
-			
-			reader.close();
-			
-			return 1;
-		}
-		catch(IOException e) 
-		{
-			//e.printStackTrace();
-			
-			return 0;
-		}
-	}
+	
 	
 	public ArrayList<String> readFile(String username) 
 	{   
