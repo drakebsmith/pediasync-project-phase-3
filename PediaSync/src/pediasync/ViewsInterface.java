@@ -2,6 +2,11 @@ package pediasync;
 
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.geometry.Insets;
@@ -17,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 
@@ -824,9 +830,56 @@ public class ViewsInterface extends Stage
 	    visitSummaryLabel.setLayoutX(100);
 	    visitSummaryLabel.setLayoutY(100);
 	    
+	    TextArea summary = new TextArea();
+        summary.setEditable(false);
+        summary.setWrapText(true);
+        summary.setPrefHeight(200);
+        summary.setPrefWidth(500);
+        summary.setLayoutX(200);
+        summary.setLayoutY(100);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(username + "_VisitSummary.txt"));
+            String summaryFile = reader.readLine();
+            summary.setText(summaryFile);
+        }
+        catch (IOException e) {
+            e.setStackTrace(null);
+        }
+	    
 	    Button addVisitSummaryButton = new Button("+");
 	    addVisitSummaryButton.setLayoutX(750);
 	    addVisitSummaryButton.setLayoutY(350);
+	    
+	    TextArea notes = new TextArea();
+        notes.setWrapText(true);
+        notes.setPrefHeight(200);
+        notes.setPrefWidth(500);
+        notes.setLayoutX(200);
+        notes.setLayoutY(100);
+
+        TextArea checkUsername = new TextArea();
+        checkUsername.setLayoutX(200);
+        checkUsername.setLayoutY(50);
+        checkUsername.setPrefHeight(1);
+
+        addVisitSummaryButton.setOnAction(e -> {
+            try {
+                String u = checkUsername.getText();
+                Filer filer = new Filer();
+                if (filer.checkUsername(u) == 1) {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(u + "_VisitSummary"));
+                    writer.write(notes.getText());
+                    writer.close();
+                }
+                else
+                    checkUsername.clear();
+            }
+            catch(IOException error) {
+                error.printStackTrace();
+            }
+
+        }); 
+
 	    
 	    
 	    
