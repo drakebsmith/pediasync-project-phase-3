@@ -28,8 +28,6 @@ import javafx.scene.control.TextField;
 
 public class ViewsInterface extends Stage
 {
-	//String username = "";
-	
 	private String username;
 	
 	private ArrayList<String> information;
@@ -54,7 +52,7 @@ public class ViewsInterface extends Stage
 	private String nurseName = "";
 	private String doctorLastName = "";
 	
-	public Filer file; // Tester
+	public Filer file;
 	
 	
 	
@@ -89,24 +87,6 @@ public class ViewsInterface extends Stage
             
         }
     }
-	
-	/*private void readFile() {
-	    Filer filer = new Filer();
-	    ArrayList<String> patientInfo = filer.readFile(this.username);
-
-	    if (patientInfo.size() >= 9) {
-	        patientName = patientInfo.get(1);
-	        birthdate = patientInfo.get(2);
-	        patientContact = patientInfo.get(3);
-	        patientEmergencyContact = patientInfo.get(4);
-	        patientAllergiesHealthConcerns = patientInfo.get(5);
-	        patientImmunization = patientInfo.get(6);
-	        patientHistory = patientInfo.get(7);
-	        patientPrescription = patientInfo.get(8);
-	        patientVitals = patientInfo.get(9);
-	        visitSummary = patientInfo.get(10);
-	    }
-	}*/
 	
 //--------------------------------------Patient View----------------------------------------//
 	
