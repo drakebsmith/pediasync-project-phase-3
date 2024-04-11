@@ -145,7 +145,23 @@ public class Filer
 			e.printStackTrace();
 		}
 	}
-	
+	public int checkUsername(String username) 
+	{
+		try 
+		{
+			BufferedReader reader = new BufferedReader(new FileReader(username + "_UserInfo.txt"));
+
+			reader.close();
+
+			return 1;
+		}
+		catch(IOException e) 
+		{
+			//e.printStackTrace();
+
+			return 0;
+		}
+	}
 	
 	public ArrayList<String> readFile(String username) 
 	{   
