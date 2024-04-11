@@ -102,18 +102,39 @@ public class Filer
 			return "";
 		}
 	}
-	public void writeFile(String username, String contact, String emergency_contact, String health_concerns, String immunization, String history, String prescription, String vitals) 
+	public void nurseWriteFile(String username, String contact, String emergency_contact, String health_concerns, String immunization, String history, String vitals) 
 	{
 		try 
 		{
 			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo", true));
 			
 			// This commented out line is here just in case we want to include descriptors in the patients' files
 			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
 					
-			writer.write("\n" + contact + "\n" + emergency_contact + "\n" + health_concerns + "\n" + immunization + "\n" + history + "\n" + prescription + "\n" + vitals);
+			writer.write("\n" + contact + "\n" + emergency_contact + "\n" + health_concerns + "\n" + immunization + "\n" + history + "\n" + vitals);
+			
+			writer.close();
+		}
+		catch(IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void doctorWriteFile(String username, String prescription) 
+	{
+		try 
+		{
+			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
+			
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo", true));
+			
+			// This commented out line is here just in case we want to include descriptors in the patients' files
+			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
+					
+			writer.write("\n" + prescription);
 			
 			writer.close();
 		}
