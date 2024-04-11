@@ -12,10 +12,8 @@ public class Main extends Application
 	public void start(Stage primary_stage) 
 	{
 		new LoginInterface();
-	
 		
-		
-		ViewsInterface patientView = new ViewsInterface("Patient View", "leotran");
+		//ViewsInterface patientView = new ViewsInterface("Patient View", "leotran");
 
 		/*Pane pane = new Pane();
 		

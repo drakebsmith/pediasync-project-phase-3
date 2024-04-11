@@ -20,7 +20,12 @@ import javafx.scene.control.Label;
 
 public class ViewsInterface extends Stage
 {
-	String username = "";
+	//String username = "";
+	
+	private String username;
+	
+	private ArrayList<String> information;
+	
 	String patientName = "";
 	String birthdate = "";
 	String patientContact = "";
@@ -38,6 +43,8 @@ public class ViewsInterface extends Stage
 	private String nurseName = "";
 	private String doctorLastName = "";
 	
+	public Filer file; // Tester
+	
 	
 	
 
@@ -45,7 +52,8 @@ public class ViewsInterface extends Stage
 	public ViewsInterface(String viewName, String username) {
 		//test
 		this.username = username;
-        readFile();
+		
+        //readFile();
         Scene newScene;
         
         switch (viewName) {
@@ -71,7 +79,7 @@ public class ViewsInterface extends Stage
         }
     }
 	
-	private void readFile() {
+	/*private void readFile() {
 	    Filer filer = new Filer();
 	    ArrayList<String> patientInfo = filer.readFile(this.username);
 
@@ -87,11 +95,18 @@ public class ViewsInterface extends Stage
 	        patientVitals = patientInfo.get(9);
 	        visitSummary = patientInfo.get(10);
 	    }
-	}
+	}*/
 	
 //--------------------------------------Patient View----------------------------------------//
 	
 	private Scene patientView() {
+		
+		file = new Filer();
+		
+		information = file.readFile(username);
+		
+		patientName = information.get(2);
+		
 		Pane pane = new Pane();
 
 	    Label pediaSyncLabel = new Label("PediaSync");
@@ -99,7 +114,7 @@ public class ViewsInterface extends Stage
 	    pediaSyncLabel.setLayoutX(80);
 	    pediaSyncLabel.setLayoutY(20);
 	    
-	    Label welcomeLabel = new Label("Welcome, " + patientName + " !");
+	    Label welcomeLabel = new Label("Welcome, " + patientName + "!");
 	    welcomeLabel.setFont(new Font(24));
 	    welcomeLabel.setLayoutX(40);
 	    welcomeLabel.setLayoutY(80);
@@ -312,6 +327,13 @@ public class ViewsInterface extends Stage
 //--------------------------------------Nurse View----------------------------------------//
 
 	private Scene nurseView() {
+		
+		file = new Filer();
+		
+		information = file.readFile(username);
+		
+		nurseName = information.get(3);
+		
 		Pane pane = new Pane();
 		
 		Label pediaSyncLabel = new Label("PediaSync");
@@ -319,7 +341,7 @@ public class ViewsInterface extends Stage
 	    pediaSyncLabel.setLayoutX(80);
 	    pediaSyncLabel.setLayoutY(20);
 	    
-	    Label welcomeLabel = new Label("Welcome, Nurse " + nurseName + " !");
+	    Label welcomeLabel = new Label("Welcome, Nurse " + nurseName + "!");
 	    welcomeLabel.setFont(new Font(24));
 	    welcomeLabel.setLayoutX(40);
 	    welcomeLabel.setLayoutY(80);
@@ -556,6 +578,13 @@ public class ViewsInterface extends Stage
 //--------------------------------------Doctor View----------------------------------------//
 
 	private Scene doctorView() {
+		
+		file = new Filer();
+		
+		information = file.readFile(username);
+		
+		doctorLastName = information.get(3);
+		
 		Pane pane = new Pane();
 		
 		Label pediaSyncLabel = new Label("PediaSync");
@@ -563,7 +592,7 @@ public class ViewsInterface extends Stage
 	    pediaSyncLabel.setLayoutX(80);
 	    pediaSyncLabel.setLayoutY(20);
 	    
-	    Label welcomeLabel = new Label("Welcome, Dr. " + doctorLastName + " !");
+	    Label welcomeLabel = new Label("Welcome, Dr. " + doctorLastName + "!");
 	    welcomeLabel.setFont(new Font(24));
 	    welcomeLabel.setLayoutX(40);
 	    welcomeLabel.setLayoutY(80);
@@ -579,7 +608,7 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 		
-
+	    
 	    
 	    
 	    Button addPatientInformationButton = new Button("Add Patient Information");

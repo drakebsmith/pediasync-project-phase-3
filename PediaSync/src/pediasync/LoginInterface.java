@@ -1,5 +1,6 @@
 package pediasync;
 
+import java.util.ArrayList;
 import java.util.Random;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -7,7 +8,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -29,6 +32,8 @@ public class LoginInterface extends Stage
 	private String last_name;
 	
 	private String date_of_birth;
+	
+	private int id;
 	
 	public Filer file;
 	
@@ -103,7 +108,7 @@ public class LoginInterface extends Stage
 		sign_in.setPrefSize(100, 30);
 		
 		sign_in.setOnAction(e -> 
-		{
+		{	
 			file = new Filer();
 			
 			String entered_username = username_input.getText();
@@ -112,26 +117,41 @@ public class LoginInterface extends Stage
 			
 			int i = 0;
 			
-			if(!(entered_username.isEmpty())) 
-			{
+			if(!(entered_username.isEmpty()) && entered_username.length() >= 6 && entered_username.length() <= 8) 
+			{	
 				i++;
 			}
-			if(!(entered_password.isEmpty())) 
+			if(!(entered_password.isEmpty()) && file.authenticate(entered_username, 1).equals(entered_password)) 
 			{
-				if(file.authenticate(entered_username).equals(entered_password))
-				{
-					i++;
-				}
+				i++;
 			}
 			username_input.clear();
 			
 			password_input.clear();
 			
 			if(i == 2) 
-			{
+			{	
+				ArrayList<String> id_check = file.readFile(entered_username);
+				
+				char check = id_check.get(0).charAt(0);
+				
+				String view = "";
+				
+				if(check == '1')
+				{
+					view = "Patient View";
+				}
+				if(check == '2')
+				{
+					view = "Nurse View";
+				}
+				if(check == '3') 
+				{
+					view = "Doctor View";
+				}
 				this.hide();
 				
-				new ViewsInterface("Patient View",username);
+				new ViewsInterface(view, entered_username);
 			}
 			else 
 			{
@@ -218,12 +238,40 @@ public class LoginInterface extends Stage
 			next.setLayoutY(315);
 				
 			next.setPrefSize(100, 30);
+			
+			ToggleGroup user_type = new ToggleGroup();
+			
+			RadioButton patient = new RadioButton("Patient");
+			
+			patient.setToggleGroup(user_type);
+			
+			patient.setLayoutX(405);
+			
+			patient.setLayoutY(220);
+			
+			RadioButton nurse = new RadioButton("Nurse");
+			
+			nurse.setToggleGroup(user_type);
+			
+			nurse.setLayoutX(405);
+			
+			nurse.setLayoutY(250);
+			
+			RadioButton doctor = new RadioButton("Doctor");
+			
+			doctor.setToggleGroup(user_type);
+			
+			doctor.setLayoutX(405);
+			
+			doctor.setLayoutY(280);
+			
+			Group radiobuttons = new Group(patient, nurse, doctor);
 				
 			Button create_account = new Button("Create Account");
 				
 			create_account.setLayoutX(388);
 				
-			create_account.setLayoutY(235);
+			create_account.setLayoutY(315);
 				
 			create_account.setPrefSize(100, 30);
 			
@@ -257,11 +305,13 @@ public class LoginInterface extends Stage
 				{
 					right_side.getChildren().clear();
 					
-					right_side.getChildren().addAll(username_text, username_input, password_text, password_input, create_account);
+					right_side.getChildren().addAll(username_text, username_input, password_text, password_input, radiobuttons, create_account);
 					
 					create_account.setOnAction(t ->
 					{
 						int j = 0;
+						
+						int id_flag = 0;
 						
 						if(!(username_input.getText().isEmpty())) 
 						{
@@ -275,8 +325,28 @@ public class LoginInterface extends Stage
 							
 							j++;
 						}
-						if(j == 2) 
+						if(patient.isSelected()) 
 						{
+							id_flag = 0;
+							
+							j++;
+						}
+						if(nurse.isSelected()) 
+						{
+							id_flag = 1;
+							
+							j++;
+						}
+						if(doctor.isSelected()) 
+						{
+							id_flag = 2;
+							
+							j++;
+						}
+						if(j == 3) 
+						{
+							id = createID(id_flag);
+							
 							createAccount();
 							
 							username_input.clear();
@@ -301,16 +371,27 @@ public class LoginInterface extends Stage
 		
 		this.show();
 	}
-	public int createID() 
+	private int createID(int flag) 
 	{
 		Random random_number = new Random();
 		
-		return (((1 + random_number.nextInt(3)) * 10000) + random_number.nextInt(10000));
+		if(flag == 0) 
+		{
+			return (10000 + random_number.nextInt(10000));
+		}
+		else if(flag == 1) 
+		{
+			return (20000 + random_number.nextInt(10000));
+		}
+		else
+		{
+			return(30000 + random_number.nextInt(10000));
+		}
 	}
-	public void createAccount() 
+	private void createAccount() 
 	{
 		file = new Filer();
 		
-		file.createFile(first_name, last_name, date_of_birth, username, password);
+		file.createFile(String.valueOf(id), password, first_name, last_name, date_of_birth, username);
 	}
 }

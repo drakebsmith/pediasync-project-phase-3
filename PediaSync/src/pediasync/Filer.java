@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class Filer
 {
 	// *REPLACE [filepath here] WITH A FILEPATH OF YOUR CHOICE FOR TESTING. Example: "C:\\Users\\[the name you chose for your OS]\\Desktop\\" (assuming you're on a Windows machine).
-	public void createFile(String first_name, String last_name, String date_of_birth, String username, String password) 
+	public void createFile(String id, String password, String first_name, String last_name, String date_of_birth, String username) 
 	{
 		try 
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
+		{	
+			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
 			
-			writer.write(password + "\n" + first_name + "\n" + last_name + "\n" + date_of_birth);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt"));
+			
+			writer.write(id + "\n" + password + "\n" + first_name + "\n" + last_name + "\n" + date_of_birth);
 			
 			writer.close();
 		}
@@ -71,17 +73,29 @@ public class Filer
 			return null;
 		}
 	}*/
-	public String authenticate(String username) 
+	public String authenticate(String username, int flag) 
 	{
 		try 
 		{
-			BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
+			String result = null;
 			
-			String password = reader.readLine();
+			BufferedReader reader = new BufferedReader(new FileReader(username + "_UserInfo.txt"));
 			
+			if(flag == 0) 
+			{
+				result = reader.readLine();
+			}
+			if(flag == 1) 
+			{	
+				reader.readLine();
+				
+				result = reader.readLine();
+				
+				//System.out.println(result);
+			}
 			reader.close();
 			
-			return password;
+			return result;
 		}
 		catch(IOException e) 
 		{
@@ -94,7 +108,9 @@ public class Filer
 	{
 		try 
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
+			//BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt", true));
+			
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo", true));
 			
 			// This commented out line is here just in case we want to include descriptors in the patients' files
 			//writer.write("\nContact: " + contact + "\nEmergency Contact: " + emergency_contact + "\nAllergies and Health Concerns: " + health_concerns + "\nImmunization History: " + immunization + "\nPatient History: " + history + "\nPrescription: " + prescription + "\nVitals: " + vitals);
@@ -110,26 +126,34 @@ public class Filer
 	}
 	
 	
-	public ArrayList<String> readFile(String username) {
-        ArrayList<String> patientInfo = new ArrayList<>();
-        try {
-        	
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\leotr\\OneDrive\\" + username + "_PatientInfo.txt"));
-
-            String line;
-            while((line = reader.readLine()) != null) {
-                patientInfo.add(line);
-                
+	public ArrayList<String> readFile(String username) 
+	{   
+		try
+		{
+			ArrayList<String> list = null;
+			
+			BufferedReader reader = new BufferedReader(new FileReader(username + "_UserInfo.txt"));
+			
+			//reader.readLine();
+			
+			String line;
+			
+			list = new ArrayList<String>();
+            
+			while((line = reader.readLine()) != null)
+			{
+				list.add(line);   
             }
             reader.close();
             
-        } catch(IOException e) {
-        	
-            e.printStackTrace();
-            
+            return list;
         }
-        
-        return patientInfo;
+		catch(IOException e) 
+		{
+			e.printStackTrace();
+			
+			return null;
+        }
     }
 	
 	
