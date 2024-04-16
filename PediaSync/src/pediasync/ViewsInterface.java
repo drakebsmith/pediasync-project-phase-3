@@ -1,5 +1,7 @@
-package pediasync;
+package PediaSync.src.pediasync;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -10,21 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 
 public class ViewsInterface extends Stage
@@ -313,37 +306,72 @@ public class ViewsInterface extends Stage
 	    
 	}
 
+	// This is the messaging portal class for the patient. It uses a ListView object to
+	// display the conversation to the user. The user can send and read new messages here.
+	// Conversation data is saved in a text file.
 	private Scene patient_portalMessagesScene() {
 		Pane pane = new Pane();
 
-	    Label pediaSyncLabel = new Label("Patient Portal Messages");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
+		Label pediaSyncLabel = new Label("Patient Portal Messages");
+		pediaSyncLabel.setFont(new Font(24));
+		pediaSyncLabel.setLayoutX(80);
+		pediaSyncLabel.setLayoutY(20);
 
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
 
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+		Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+		crossVertical.setFill(Color.RED);
 
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(patientView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
-	    
-	    return new Scene(pane, 800, 400);
+		Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+		crossHorizontal.setFill(Color.RED);
+
+		Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+		crossGroup.setLayoutX(50);
+		crossGroup.setLayoutY(12);
+
+
+
+
+		Button backButton = new Button("<-");
+		backButton.setFont(new Font(12));
+		backButton.setLayoutX(20);
+		backButton.setLayoutY(350);
+		backButton.setOnAction(e -> {
+			this.setScene(patientView());
+		});
+
+		// Scrollable list of the messages
+		ListView<String> messageListView = new ListView<>();
+		messageListView.setLayoutX(20);
+		messageListView.setLayoutY(60);
+		messageListView.setPrefSize(760, 280);
+
+		// Text field to send a new message
+		TextField messageInputField = new TextField();
+		messageInputField.setLayoutX(20.0);
+		messageInputField.setLayoutY(350);
+		messageInputField.setPrefWidth(760);
+
+		// read in the messaging file
+		Filer myFiler = new Filer();
+
+		messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(username)));
+
+		//set on action of pressing enter to "send" the message
+		messageInputField.setOnAction(event -> {
+			String text = messageInputField.getText();
+			String message = "Patient: " + text;
+
+			myFiler.writeMessagingFile(username, message);
+
+			messageInputField.clear();
+			messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(username)));
+
+		});
+
+		pane.getChildren().addAll(pediaSyncLabel, crossGroup, backButton, messageListView, messageInputField);
+
+		return new Scene(pane, 800, 400);
 	}
 
 	private Scene patient_visitSummaryScene() {
@@ -747,41 +775,91 @@ public class ViewsInterface extends Stage
 	    
 	    return new Scene(pane, 800, 400);
 	}
-	
+
+
+	// This is the nurse messaging portal class. It asks the user for the patient ID
+	// that they want to message, searches for the message history and displays it to the user
+	// Finally, there is a text field where the user can send messages with at the bottom. A back
+	// button is also displayed to go back to the nurses landing page.
 	private Scene nurse_portalMessagesScene() {
 		Pane pane = new Pane();
 
-	    Label pediaSyncLabel = new Label("Patient Portal Messages");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
+		Label promptLabel = new Label("Enter the patient ID to be messaged: ");
+		promptLabel.setFont(new Font(18));
+		promptLabel.setLayoutX(100);
+		promptLabel.setLayoutY(50);
 
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
+		TextField idInput = new TextField();
+		idInput.setLayoutX(100);
+		idInput.setLayoutY(80);
+		idInput.setPrefWidth(200);
 
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+		Button submitButton = new Button("Submit");
+		submitButton.setFont(new Font(14));
+		submitButton.setLayoutX(600);
+		submitButton.setLayoutY(80);
 
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(nurseView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
-	    
-	    return new Scene(pane, 800, 400);
+		Button backButton = new Button("<-");
+		backButton.setFont(new Font(12));
+		backButton.setLayoutX(750);
+		backButton.setLayoutY(20);
+		backButton.setOnAction(e -> {
+			this.setScene(patientView());
+		});
+
+		pane.getChildren().addAll(promptLabel, idInput, submitButton, backButton);
+
+
+		submitButton.setOnAction(f -> {
+					String patient_username = idInput.getText();
+					pane.getChildren().clear();
+
+					Label pediaSyncLabel = new Label("Patient Portal Messages");
+					pediaSyncLabel.setFont(new Font(24));
+					pediaSyncLabel.setLayoutX(80);
+					pediaSyncLabel.setLayoutY(20);
+
+					Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+					crossVertical.setFill(Color.RED);
+
+					Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+					crossHorizontal.setFill(Color.RED);
+
+					Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+					crossGroup.setLayoutX(50);
+					crossGroup.setLayoutY(12);
+
+					ListView<String> messageListView = new ListView<>();
+					messageListView.setLayoutX(20);
+					messageListView.setLayoutY(60);
+					messageListView.setPrefSize(760, 280);
+
+					TextField messageInputField = new TextField();
+					messageInputField.setLayoutX(20.0);
+					messageInputField.setLayoutY(350);
+					messageInputField.setPrefWidth(760);
+
+					Filer myFiler = new Filer();
+					messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(patient_username)));
+
+					messageInputField.setOnAction(event -> {
+						String text = messageInputField.getText();
+						String message = "Nurse: " + text;
+
+						myFiler.writeMessagingFile(patient_username, message);
+
+						messageInputField.clear();
+						messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(patient_username)));
+
+					});
+			pane.getChildren().addAll(pediaSyncLabel, crossGroup, backButton, messageListView, messageInputField);
+		});
+
+		return new Scene(pane, 800, 400);
 	}
-	
-	
+
+
 	
 //--------------------------------------Nurse View----------------------------------------//
 	
@@ -1147,38 +1225,85 @@ public class ViewsInterface extends Stage
 	    
 	    return new Scene(pane, 800, 400);
 	}
-	
+
+
+	// This is the messaging portal class for the doctor. It is nearly identical to the Nurse one
 	private Scene doctor_portalMessagesScene() {
 		Pane pane = new Pane();
 
-	    Label pediaSyncLabel = new Label("Patient Portal Messages");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
+		Label promptLabel = new Label("Enter the patient ID to be messaged: ");
+		promptLabel.setFont(new Font(18));
+		promptLabel.setLayoutX(100);
+		promptLabel.setLayoutY(50);
 
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
+		TextField idInput = new TextField();
+		idInput.setLayoutX(100);
+		idInput.setLayoutY(80);
+		idInput.setPrefWidth(200);
 
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+		Button submitButton = new Button("Submit");
+		submitButton.setFont(new Font(14));
+		submitButton.setLayoutX(600);
+		submitButton.setLayoutY(80);
 
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(doctorView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton);
-	    
-	    return new Scene(pane, 800, 400);
+		Button backButton = new Button("<-");
+		backButton.setFont(new Font(12));
+		backButton.setLayoutX(750);
+		backButton.setLayoutY(20);
+		backButton.setOnAction(e -> {
+			this.setScene(patientView());
+		});
+
+		pane.getChildren().addAll(promptLabel, idInput, submitButton, backButton);
+
+
+		submitButton.setOnAction(f -> {
+			String patient_username = idInput.getText();
+			pane.getChildren().clear();
+
+			Label pediaSyncLabel = new Label("Patient Portal Messages");
+			pediaSyncLabel.setFont(new Font(24));
+			pediaSyncLabel.setLayoutX(80);
+			pediaSyncLabel.setLayoutY(20);
+
+			Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+			crossVertical.setFill(Color.RED);
+
+			Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+			crossHorizontal.setFill(Color.RED);
+
+			Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+			crossGroup.setLayoutX(50);
+			crossGroup.setLayoutY(12);
+
+			ListView<String> messageListView = new ListView<>();
+			messageListView.setLayoutX(20);
+			messageListView.setLayoutY(60);
+			messageListView.setPrefSize(760, 280);
+
+			TextField messageInputField = new TextField();
+			messageInputField.setLayoutX(20.0);
+			messageInputField.setLayoutY(350);
+			messageInputField.setPrefWidth(760);
+
+			Filer myFiler = new Filer();
+			messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(patient_username)));
+
+			messageInputField.setOnAction(event -> {
+				String text = messageInputField.getText();
+				String message = "Doctor: " + text;
+
+				myFiler.writeMessagingFile(patient_username, message);
+
+				messageInputField.clear();
+				messageListView.setItems(FXCollections.observableArrayList(myFiler.readMessagingFile(patient_username)));
+
+			});
+			pane.getChildren().addAll(pediaSyncLabel, crossGroup, backButton, messageListView, messageInputField);
+		});
+
+		return new Scene(pane, 800, 400);
 	}
 	
 	
