@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,7 +31,7 @@ public class ViewsInterface extends Stage
 {
 	private String username;
 	
-	private ArrayList<String> information;
+	//private ArrayList<String> information;
 	
 	String patientUsername = "";
 	String patientName = "";
@@ -46,7 +47,7 @@ public class ViewsInterface extends Stage
 	
 	String date = "4/9/2004";
 	
-	int flag = 0;
+	int counter = 0;
 	
 	
 	private String nurseName = "";
@@ -94,9 +95,11 @@ public class ViewsInterface extends Stage
 		
 		file = new Filer();
 		
-		information = file.readFile(username);
+		ArrayList<String> list = new ArrayList<String>();
 		
-		patientName = information.get(2);
+		list = file.readFile(username, 0);
+		
+		patientName = list.get(2);
 		//fix
         
 		Pane pane = new Pane();
@@ -160,18 +163,11 @@ public class ViewsInterface extends Stage
 	private Scene patient_patientInformationScene() {
 		Pane pane = new Pane();
 		
-		if(flag == 1) {
-			
-	        patientContact = information.get(5);
-	        patientEmergencyContact = information.get(6);
-	        patientAllergiesHealthConcerns = information.get(7);
-	        patientImmunization = information.get(8);
-	        patientVitals = information.get(9);
-	        patientPrescription = information.get(10);this.setScene(patientView());
-		}
-		else {
-			this.setScene(patientView());
-		}
+		file = new Filer();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list = file.readFile(username, 1);
 
 	    Label pediaSyncLabel = new Label("Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
@@ -190,38 +186,117 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
+	    Label contactLabel = new Label("Contact: ");
 	    
-	    Label contactLabel = new Label("Contact: " + patientContact);
+	    contactLabel.setScaleX(1.5);
+	    
+	    contactLabel.setScaleY(1.5);
+	    
 	    contactLabel.setFont(new Font(12));
-	    contactLabel.setLayoutX(250);
-	    contactLabel.setLayoutY(100);
+	    contactLabel.setLayoutX(334.5);
+	    contactLabel.setLayoutY(75);
 	    
-	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
+	    Label emergencyContactLabel = new Label("Emergency Contact: ");
+	    
+	    emergencyContactLabel.setScaleX(1.5);
+	    
+	    emergencyContactLabel.setScaleY(1.5);
+	    
 	    emergencyContactLabel.setFont(new Font(12));
-	    emergencyContactLabel.setLayoutX(250);
-	    emergencyContactLabel.setLayoutY(130);
+	    emergencyContactLabel.setLayoutX(257.5);
+	    emergencyContactLabel.setLayoutY(115);
 	    
-	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    Label vitalsLabel = new Label("Vitals: ");
+	    
+	    vitalsLabel.setScaleX(1.5);
+	    
+	    vitalsLabel.setScaleY(1.5);
+	    
+	    vitalsLabel.setFont(new Font(12));
+	    vitalsLabel.setLayoutX(350);
+	    vitalsLabel.setLayoutY(155);
+	    
+	    Label allergiesHealthConcernsLabel = new Label("Allergies & Health Concerns: ");
+	    
+	    allergiesHealthConcernsLabel.setScaleX(1.5);
+	    
+	    allergiesHealthConcernsLabel.setScaleY(1.5);
+	    
 	    allergiesHealthConcernsLabel.setFont(new Font(12));
-	    allergiesHealthConcernsLabel.setLayoutX(250);
-	    allergiesHealthConcernsLabel.setLayoutY(160);
+	    allergiesHealthConcernsLabel.setLayoutX(200);
+	    allergiesHealthConcernsLabel.setLayoutY(195);
 	    
-	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    Label immunizationHistoryLabel = new Label("Immunization History: ");
+	    
+	    immunizationHistoryLabel.setScaleX(1.5);
+	    
+	    immunizationHistoryLabel.setScaleY(1.5);
+	    
 	    immunizationHistoryLabel.setFont(new Font(12));
-	    immunizationHistoryLabel.setLayoutX(250);
-	    immunizationHistoryLabel.setLayoutY(190);
+	    immunizationHistoryLabel.setLayoutX(244);
+	    immunizationHistoryLabel.setLayoutY(235);
 	    
-	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    Label patientHistoryLabel = new Label("Patient History: ");
+	    
+	    patientHistoryLabel.setScaleX(1.5);
+	    
+	    patientHistoryLabel.setScaleY(1.5);
+	    
 	    patientHistoryLabel.setFont(new Font(12));
-	    patientHistoryLabel.setLayoutX(250);
-	    patientHistoryLabel.setLayoutY(220);
+	    patientHistoryLabel.setLayoutX(289);
+	    patientHistoryLabel.setLayoutY(275);
 	    
-	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
+	    Label prescriptionLabel = new Label("Prescription: ");
+	    
+	    prescriptionLabel.setScaleX(1.5);
+	    
+	    prescriptionLabel.setScaleY(1.5);
+	    
 	    prescriptionLabel.setFont(new Font(12));
-	    prescriptionLabel.setLayoutX(250);
-	    prescriptionLabel.setLayoutY(250);
+	    prescriptionLabel.setLayoutX(308);
+	    prescriptionLabel.setLayoutY(315);
 	    
+	    TextField contactField = new TextField(list.get(0));
+	    contactField.setEditable(false);
+	    contactField.setFont(new Font(12));
+	    contactField.setLayoutX(400);
+	    contactField.setLayoutY(73);
 	    
+	    TextField emergencyContactField = new TextField(list.get(1));
+	    emergencyContactField.setEditable(false);
+	    emergencyContactField.setFont(new Font(12));
+	    emergencyContactField.setLayoutX(400);
+	    emergencyContactField.setLayoutY(113);
+	    
+	    TextField vitalsField = new TextField(list.get(2));
+	    vitalsField.setEditable(false);
+	    vitalsField.setFont(new Font(12));
+	    vitalsField.setLayoutX(400);
+	    vitalsField.setLayoutY(153);
+	    
+	    TextField allergiesHealthConcernsField = new TextField(list.get(3));
+	    allergiesHealthConcernsField.setEditable(false);
+	    allergiesHealthConcernsField.setFont(new Font(12));
+	    allergiesHealthConcernsField.setLayoutX(400);
+	    allergiesHealthConcernsField.setLayoutY(193);
+	    
+	    TextField immunizationHistoryField = new TextField(list.get(4));
+	    immunizationHistoryField.setEditable(false);
+	    immunizationHistoryField.setFont(new Font(12));
+	    immunizationHistoryField.setLayoutX(400);
+	    immunizationHistoryField.setLayoutY(233);
+	    
+	    TextField patientHistoryField = new TextField(list.get(5));
+	    patientHistoryField.setEditable(false);
+	    patientHistoryField.setFont(new Font(12));
+	    patientHistoryField.setLayoutX(400);
+	    patientHistoryField.setLayoutY(273);
+	    
+	    TextField prescription = new TextField(list.get(6));
+	    prescription.setEditable(false);
+	    prescription.setFont(new Font(12));
+	    prescription.setLayoutX(400);
+	    prescription.setLayoutY(313);
 	    
 	    
 	    Button backButton = new Button("<-");
@@ -232,7 +307,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(patientView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel, vitalsLabel, allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel, contactField, emergencyContactField, vitalsField, allergiesHealthConcernsField, immunizationHistoryField, patientHistoryField, prescription);
 	    
 	    return new Scene(pane, 800, 400);
 	    
@@ -321,11 +396,11 @@ public class ViewsInterface extends Stage
 
 	private Scene nurseView() {
 		
-		file = new Filer();
+		//file = new Filer();
 		
-		information = file.readFile(username);
+		//information = file.readFile(username);
 		
-		nurseName = information.get(3);
+		//nurseName = information.get(3);
 		
 
 		
@@ -388,19 +463,6 @@ public class ViewsInterface extends Stage
 	
 	private Scene nurse_addPatientInformationScene() {
 		Pane pane = new Pane();
-		
-		if(flag == 1) {
-			
-	        patientContact = information.get(5);
-	        patientEmergencyContact = information.get(6);
-	        patientAllergiesHealthConcerns = information.get(7);
-	        patientImmunization = information.get(8);
-	        patientVitals = information.get(9);
-	        patientPrescription = information.get(10);this.setScene(patientView());
-		}
-		else {
-			this.setScene(nurseView());
-		}
 
 	    Label pediaSyncLabel = new Label("Add Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
@@ -419,105 +481,195 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
-	    TextField contactField = new TextField(patientContact);
-	    contactField.setFont(new Font(12));
-	    contactField.setLayoutX(250);
-	    contactField.setLayoutY(100);
-	    
-	    TextField emergencyContactField = new TextField(patientEmergencyContact);
-	    emergencyContactField.setFont(new Font(12));
-	    emergencyContactField.setLayoutX(250);
-	    emergencyContactField.setLayoutY(130);
-	    
-	    TextField vitalsField = new TextField(patientAllergiesHealthConcerns);
-	    vitalsField.setFont(new Font(12));
-	    vitalsField.setLayoutX(250);
-	    vitalsField.setLayoutY(160);
-	    
-	    TextField allergiesHealthConcernsField = new TextField(patientAllergiesHealthConcerns);
-	    allergiesHealthConcernsField.setFont(new Font(12));
-	    allergiesHealthConcernsField.setLayoutX(250);
-	    allergiesHealthConcernsField.setLayoutY(190);
-	    
-	    TextField immunizationHistoryField = new TextField(patientImmunization);
-	    immunizationHistoryField.setFont(new Font(12));
-	    immunizationHistoryField.setLayoutX(250);
-	    immunizationHistoryField.setLayoutY(220);
-	    
-	    TextField patientHistoryField = new TextField(patientHistory);
-	    patientHistoryField.setFont(new Font(12));
-	    patientHistoryField.setLayoutX(250);
-	    patientHistoryField.setLayoutY(250);
-	    
-	    TextField patientUsernameField = new TextField(patientUsername);
+	    TextField patientUsernameField = new TextField();
 	    patientUsernameField.setFont(new Font(12));
-	    patientUsernameField.setLayoutX(250);
-	    patientUsernameField.setLayoutY(350);
+	    patientUsernameField.setLayoutX(400);
+	    patientUsernameField.setLayoutY(73);
 	    
+	    TextField contactField = new TextField();
+	    contactField.setFont(new Font(12));
+	    contactField.setLayoutX(400);
+	    contactField.setLayoutY(113);
 	    
-	    Label contactLabel = new Label("Contact: " + patientContact);
+	    TextField emergencyContactField = new TextField();
+	    emergencyContactField.setFont(new Font(12));
+	    emergencyContactField.setLayoutX(400);
+	    emergencyContactField.setLayoutY(153);
+	    
+	    TextField vitalsField = new TextField();
+	    vitalsField.setFont(new Font(12));
+	    vitalsField.setLayoutX(400);
+	    vitalsField.setLayoutY(193);
+	    
+	    TextField allergiesHealthConcernsField = new TextField();
+	    allergiesHealthConcernsField.setFont(new Font(12));
+	    allergiesHealthConcernsField.setLayoutX(400);
+	    allergiesHealthConcernsField.setLayoutY(233);
+	    
+	    TextField immunizationHistoryField = new TextField();
+	    immunizationHistoryField.setFont(new Font(12));
+	    immunizationHistoryField.setLayoutX(400);
+	    immunizationHistoryField.setLayoutY(273);
+	    
+	    TextField patientHistoryField = new TextField();
+	    patientHistoryField.setFont(new Font(12));
+	    patientHistoryField.setLayoutX(400);
+	    patientHistoryField.setLayoutY(313);
+	    
+	    Label patient_username = new Label("Patient Username: ");
+	    
+	    patient_username.setScaleX(1.5);
+	    
+	    patient_username.setScaleY(1.5);
+	    
+	    patient_username.setFont(new Font(12));
+	    
+	    patient_username.setLayoutX(268.5);
+	    
+	    patient_username.setLayoutY(75);
+	    
+	    Label contactLabel = new Label("Contact: ");
+	    
+	    contactLabel.setScaleX(1.5);
+	    
+	    contactLabel.setScaleY(1.5);
+	    
 	    contactLabel.setFont(new Font(12));
-	    contactLabel.setLayoutX(120);
-	    contactLabel.setLayoutY(100);
+	    contactLabel.setLayoutX(334.5);
+	    contactLabel.setLayoutY(115);
 	    
-	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
+	    Label emergencyContactLabel = new Label("Emergency Contact: ");
+	    
+	    emergencyContactLabel.setScaleX(1.5);
+	    
+	    emergencyContactLabel.setScaleY(1.5);
+	    
 	    emergencyContactLabel.setFont(new Font(12));
-	    emergencyContactLabel.setLayoutX(120);
-	    emergencyContactLabel.setLayoutY(130);
+	    emergencyContactLabel.setLayoutX(257.5);
+	    emergencyContactLabel.setLayoutY(155);
 	    
 	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
+	    
+	    vitalsLabel.setScaleX(1.5);
+	    
+	    vitalsLabel.setScaleY(1.5);
+	    
 	    vitalsLabel.setFont(new Font(12));
-	    vitalsLabel.setLayoutX(120);
-	    vitalsLabel.setLayoutY(160);
+	    vitalsLabel.setLayoutX(350);
+	    vitalsLabel.setLayoutY(195);
 	    
-	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
+	    Label allergiesHealthConcernsLabel = new Label("Allergies & Health Concerns: ");
+	    
+	    allergiesHealthConcernsLabel.setScaleX(1.5);
+	    
+	    allergiesHealthConcernsLabel.setScaleY(1.5);
+	    
 	    allergiesHealthConcernsLabel.setFont(new Font(12));
-	    allergiesHealthConcernsLabel.setLayoutX(120);
-	    allergiesHealthConcernsLabel.setLayoutY(190);
+	    allergiesHealthConcernsLabel.setLayoutX(200);
+	    allergiesHealthConcernsLabel.setLayoutY(235);
 	    
-	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
+	    Label immunizationHistoryLabel = new Label("Immunization History: ");
+	    
+	    immunizationHistoryLabel.setScaleX(1.5);
+	    
+	    immunizationHistoryLabel.setScaleY(1.5);
+	    
 	    immunizationHistoryLabel.setFont(new Font(12));
-	    immunizationHistoryLabel.setLayoutX(120);
-	    immunizationHistoryLabel.setLayoutY(220);
+	    immunizationHistoryLabel.setLayoutX(244);
+	    immunizationHistoryLabel.setLayoutY(275);
 	    
-	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
+	    Label patientHistoryLabel = new Label("Patient History: ");
+	    
+	    patientHistoryLabel.setScaleX(1.5);
+	    
+	    patientHistoryLabel.setScaleY(1.5);
+	    
 	    patientHistoryLabel.setFont(new Font(12));
-	    patientHistoryLabel.setLayoutX(120);
-	    patientHistoryLabel.setLayoutY(250);
+	    patientHistoryLabel.setLayoutX(289);
+	    patientHistoryLabel.setLayoutY(315);
 	    
-	    
-	    
-	    
-	    Button add = new Button("+");
-	    add.setLayoutX(750);
-	    add.setLayoutY(350);
-	    add.setOnAction(e -> {
-	        patientContact = contactField.getText();
-	        patientEmergencyContact = emergencyContactField.getText();
-	        patientVitals = vitalsField.getText();
-	        patientAllergiesHealthConcerns = allergiesHealthConcernsField.getText();
-	        patientImmunization = immunizationHistoryField.getText();
-	        patientHistory = patientHistoryField.getText();
-	        
-	        patientUsername = patientUsernameField.getText();
-	        
-	        
-	        file.nurseWriteFile(patientUsername, patientContact, patientEmergencyContact, patientAllergiesHealthConcerns, patientImmunization, patientHistory, patientVitals);
-	       
+	    Button save = new Button("Save");
+	    save.setLayoutX(700);
+	    save.setLayoutY(350);
+	    save.setPrefSize(75, 30);
+	    save.setOnAction(e -> 
+	    {	
+	    	file = new Filer();
+	    	
+	    	int i = 0;
+	    	
+	    	String patient_username_text = patientUsernameField.getText();
+	    	
+	    	String contact_text = contactField.getText();
+	    	
+	    	String emergency_contact_text = emergencyContactField.getText();
+	    	
+	    	String vitals_text = vitalsField.getText();
+	    	
+	    	String allergies_text = allergiesHealthConcernsField.getText();
+	    	
+	    	String immunization_text = immunizationHistoryField.getText();
+	    	
+	    	String history_text = patientHistoryField.getText();
+	    	
+	    	if(!(patient_username_text.isEmpty() && file.checkUsername(patient_username_text) == 1)) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(contact_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(emergency_contact_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(vitals_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(allergies_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(immunization_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(history_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(i == 7) 
+	    	{
+	    		ArrayList<String> list = new ArrayList<String>();
+	    		
+	    		list = file.readFile(patient_username_text, 0);
+	    		
+	    		Collections.addAll(list, contact_text, emergency_contact_text, vitals_text, allergies_text, immunization_text, history_text);
+	    		
+	    		file.writeFile(patient_username_text, list);
+	    		
+	    		counter++;
+	    		
+	    		this.setScene(nurseView());
+	    	}
+	    	else 
+	    	{
+	    		// Error handling; follow the code I wrote in LoginInterface()
+	    	}
 	    });
-	    
-	    
-	    
 	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
 	    backButton.setLayoutX(20);
 	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
+	    backButton.setOnAction(e -> 
+	    {
 	        this.setScene(nurseView());
 	    });
 	    
-	    pane.getChildren().addAll(patientUsernameField,contactLabel,emergencyContactLabel,contactField,emergencyContactField,pediaSyncLabel,crossGroup,backButton,add,vitalsLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,vitalsField,allergiesHealthConcernsField,immunizationHistoryField,patientHistoryField);
+	    pane.getChildren().addAll(patient_username, patientUsernameField,contactLabel,emergencyContactLabel,contactField,emergencyContactField,pediaSyncLabel,crossGroup,backButton,save,vitalsLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,vitalsField,allergiesHealthConcernsField,immunizationHistoryField,patientHistoryField);
 	    
 	    return new Scene(pane, 800, 400);
 	}
@@ -637,11 +789,11 @@ public class ViewsInterface extends Stage
 
 	private Scene doctorView() {
 		
-		file = new Filer();
+		//file = new Filer();
 		
-		information = file.readFile(username);
+		//information = file.readFile(username);
 		
-		doctorLastName = information.get(3);
+		//doctorLastName = information.get(3);
 		
 
 		Pane pane = new Pane();
@@ -713,7 +865,7 @@ public class ViewsInterface extends Stage
 	private Scene doctor_addPatientInformationScene() {
 		Pane pane = new Pane();
 		
-		if(flag == 1) {
+		/*f(flag == 1) {
 			
 	        patientContact = information.get(5);
 	        patientEmergencyContact = information.get(6);
@@ -724,7 +876,7 @@ public class ViewsInterface extends Stage
 		}
 		else {
 			this.setScene(doctorView());
-		}
+		}*/
 
 	    Label pediaSyncLabel = new Label("Add Patient Information");
 	    pediaSyncLabel.setFont(new Font(24));
@@ -743,33 +895,81 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutX(50);
 	    crossGroup.setLayoutY(12);
 	    
-	    TextField prescriptionField = new TextField(patientPrescription);
-	    prescriptionField.setFont(new Font(12));
-	    prescriptionField.setLayoutX(250);
-	    prescriptionField.setLayoutY(100);
+	    TextField patientUsernameField = new TextField();
+	    patientUsernameField.setFont(new Font(12));
+	    patientUsernameField.setLayoutX(400);
+	    patientUsernameField.setLayoutY(73);
 	    
-	    Label prescriptionLabel = new Label("Prescription:");
+	    Label patient_username = new Label("Patient Username: ");
+	    
+	    patient_username.setScaleX(1.5);
+	    
+	    patient_username.setScaleY(1.5);
+	    
+	    patient_username.setFont(new Font(12));
+	    
+	    patient_username.setLayoutX(268.5);
+	    
+	    patient_username.setLayoutY(75);
+	    
+	    TextField prescriptionField = new TextField();
+	    prescriptionField.setFont(new Font(12));
+	    prescriptionField.setLayoutX(400);
+	    prescriptionField.setLayoutY(113);
+	    
+	    Label prescriptionLabel = new Label("Prescription: ");
+	    
+	    prescriptionLabel.setScaleX(1.5);
+	    
+	    prescriptionLabel.setScaleY(1.5);
+	    
 	    prescriptionLabel.setFont(new Font(12));
-	    prescriptionLabel.setLayoutX(250);
-	    prescriptionLabel.setLayoutY(100);
+	    prescriptionLabel.setLayoutX(307);
+	    prescriptionLabel.setLayoutY(115);
 	    
 	    
 	   
-	    Button add = new Button("+");
-	    add.setLayoutX(750);
-	    add.setLayoutY(350);
-	    add.setOnAction(e -> {
-	        patientPrescription = prescriptionField.getText();
-	        
-	        flag = 1;
-	        
-	        file.doctorWriteFile(username, patientPrescription);
-	       
+	    Button save = new Button("Save");
+	    save.setLayoutX(700);
+	    save.setLayoutY(350);
+	    save.setPrefSize(75, 30);
+	    save.setOnAction(e -> 
+	    {
+	    	file = new Filer();
+	    	
+	    	int i = 0;
+	    	
+	    	String patient_username_text = patientUsernameField.getText();
+	    	
+	    	String prescription_text = prescriptionField.getText();
+	    	
+	    	if(!(patient_username_text.isEmpty() && file.checkUsername(patient_username_text) == 1)) 
+	    	{
+	    		i++;
+	    	}
+	    	if(!(prescription_text.isEmpty())) 
+	    	{
+	    		i++;
+	    	}
+	    	if(i == 2) 
+	    	{
+	    		ArrayList<String> list = new ArrayList<String>();
+	    		
+	    		list = file.readFile(patient_username_text, 2);
+	    		
+	    		Collections.addAll(list, prescription_text);
+	    		
+	    		file.writeFile(patient_username_text, list);
+	    		
+	    		counter++;
+	    		
+	    		this.setScene(doctorView());
+	    	}
+	    	else 
+	    	{
+	    		// Error handling; follow the code I wrote in LoginInterface()
+	    	}
 	    });
-	    
-	    
-	    
-	    
 	    
 	    Button backButton = new Button("<-");
 	    backButton.setFont(new Font(12));
@@ -779,7 +979,7 @@ public class ViewsInterface extends Stage
 	        this.setScene(doctorView());
 	    });
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,prescriptionLabel,prescriptionField,add);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,patientUsernameField, patient_username, prescriptionLabel,prescriptionField, save);
 	    
 	    return new Scene(pane, 800, 400);
 	}

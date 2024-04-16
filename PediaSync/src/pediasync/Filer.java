@@ -52,13 +52,17 @@ public class Filer
 			return "";
 		}
 	}
-	public void nurseWriteFile(String username, String contact, String emergency_contact, String health_concerns, String immunization, String history, String vitals) 
+	public void writeFile(String username, ArrayList<String> list) 
 	{
 		try 
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_UserInfo.txt"));
 			
-			writer.write("\n" + contact + "\n" + emergency_contact + "\n" + health_concerns + "\n" + immunization + "\n" + history + "\n" + vitals);
+			for(int i = 0; i < list.size(); i++) 
+			{
+				writer.write(list.get(i) + "\n");
+			}
+			//writer.write("\n" + contact + "\n" + emergency_contact + "\n" + vitals + "\n" + health_concerns + "\n" + immunization + "\n" + history);
 			
 			writer.close();
 		}
@@ -67,7 +71,7 @@ public class Filer
 			e.printStackTrace();
 		}
 	}
-	public void doctorWriteFile(String username, String prescription) 
+	/*public void doctorWriteFile(String username, String prescription) 
 	{
 		try 
 		{
@@ -81,7 +85,7 @@ public class Filer
 		{
 			e.printStackTrace();
 		}
-	}
+	}*/
 	public int checkUsername(String username) 
 	{
 		try 
@@ -97,7 +101,7 @@ public class Filer
 			return 0;
 		}
 	}
-	public ArrayList<String> readFile(String username) 
+	public ArrayList<String> readFile(String username, int flag) 
 	{   
 		try
 		{
@@ -108,10 +112,32 @@ public class Filer
 			String line;
 			
 			list = new ArrayList<String>();
-            
-			while((line = reader.readLine()) != null)
+			
+			int bound = 5;
+			
+			if(flag == 1) 
 			{
-				list.add(line);   
+				int i = 0;
+				
+				while(i < 5) 
+				{
+					reader.readLine();
+					
+					i++;
+				}
+				bound = 7; 
+			}
+			if(flag == 2) 
+			{
+				bound = 11;
+			}
+			int j = 0;
+			
+			while((line = reader.readLine()) != null && j < bound)
+			{
+				list.add(line);
+				
+				j++;
             }
             reader.close();
             
