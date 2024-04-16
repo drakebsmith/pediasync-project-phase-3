@@ -1,4 +1,4 @@
-package pediasync;
+package PediaSync;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -150,4 +150,44 @@ public class Filer
 			return null;
         }
     }
+
+	// This method reads in data in the messaging portal format to be displayed to the user
+	public ArrayList<String> readMessagingFile(String username) {
+		ArrayList<String> patientMessageHistory = new ArrayList<>();
+		try {
+
+			BufferedReader reader = new BufferedReader(new FileReader(username + "_PatientMessageHistory.txt"));
+
+
+			String line;
+			while((line = reader.readLine()) != null) {
+				patientMessageHistory.add(line);
+			}
+			reader.close();
+
+		} catch(IOException e) {
+
+			System.out.println("File not found");
+
+		}
+
+		return patientMessageHistory;
+	}
+
+
+	// This method saves messaging data to the system to be read later.
+	public void writeMessagingFile(String username, String message) {
+		String fileName = username + "_PatientMessageHistory.txt";
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+			writer.write(message);
+			writer.newLine();
+			writer.close();
+
+
+		} catch (IOException e) {
+			System.out.println("Failed to write file");
+		}
+	}
+
 }
