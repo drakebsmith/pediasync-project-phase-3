@@ -779,8 +779,7 @@ public class ViewsInterface extends Stage
 
 	// This is the nurse messaging portal class. It asks the user for the patient ID
 	// that they want to message, searches for the message history and displays it to the user
-	// Finally, there is a text field where the user can send messages with at the bottom. A back
-	// button is also displayed to go back to the nurses landing page.
+	// Finally, there is a text field where the user can send messages with at the bottom.
 	private Scene nurse_portalMessagesScene() {
 		Pane pane = new Pane();
 
