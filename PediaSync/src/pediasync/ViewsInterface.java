@@ -38,7 +38,7 @@ public class ViewsInterface extends Stage
 	String patientVitals = "";
 	String visitSummary = "";
 	
-	String date = "4/9/2004";
+	//String date = "4/9/2004";
 	
 	int counter = 0;
 	
@@ -395,7 +395,7 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutY(12);
 	    
 	    
-	    Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+	    Label visitSummaryLabel = new Label(": " + visitSummary);
 	    visitSummaryLabel.setFont(new Font(12));
 	    visitSummaryLabel.setLayoutX(100);
 	    visitSummaryLabel.setLayoutY(100);
@@ -424,13 +424,13 @@ public class ViewsInterface extends Stage
 
 	private Scene nurseView() {
 		
-		//file = new Filer();
+		file = new Filer();
 		
-		//information = file.readFile(username);
+		ArrayList<String> list = new ArrayList<String>();
 		
-		//nurseName = information.get(3);
+		list = file.readFile(username, 0);
 		
-
+		nurseName = list.get(3);
 		
 		Pane pane = new Pane();
 		
@@ -461,7 +461,7 @@ public class ViewsInterface extends Stage
 	    addPatientInformationButton.setOnAction(e -> this.setScene(nurse_addPatientInformationScene()));
 	    Button patientInformationButton = new Button("Patient Information");
 	    patientInformationButton.setOnAction(e -> this.setScene(nurse_patientInformationScene()));
-	    Button patientPortalMessagesButton = new Button("Patient Portal Messagesy");
+	    Button patientPortalMessagesButton = new Button("Patient Portal Messages");
 	    patientPortalMessagesButton.setOnAction(e -> this.setScene(nurse_portalMessagesScene()));
 	    
 	    addPatientInformationButton.setPrefWidth(200);
@@ -872,6 +872,13 @@ public class ViewsInterface extends Stage
 		
 		//doctorLastName = information.get(3);
 		
+		file = new Filer();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list = file.readFile(username, 0);
+		
+		doctorLastName = list.get(3);
 
 		Pane pane = new Pane();
 		
@@ -1082,7 +1089,7 @@ public class ViewsInterface extends Stage
 	    crossGroup.setLayoutY(12);
 	    
 	    
-	    Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+	    Label visitSummaryLabel = new Label(": " + visitSummary);
 	    visitSummaryLabel.setFont(new Font(12));
 	    visitSummaryLabel.setLayoutX(100);
 	    visitSummaryLabel.setLayoutY(100);
