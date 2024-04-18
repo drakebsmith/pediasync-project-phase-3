@@ -1161,3 +1161,4 @@ public class ViewsInterface extends Stage
 	
 //--------------------------------------Doctor View----------------------------------------//
 }
+
