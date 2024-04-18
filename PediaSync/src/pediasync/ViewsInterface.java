@@ -38,7 +38,7 @@ public class ViewsInterface extends Stage
 	String patientVitals = "";
 	String visitSummary = "";
 	
-	//String date = "4/9/2004";
+	String date = "4/9/2004";
 	
 	int counter = 0;
 	
@@ -377,42 +377,61 @@ public class ViewsInterface extends Stage
 	private Scene patient_visitSummaryScene() {
 		Pane pane = new Pane();
 
-	    Label pediaSyncLabel = new Label("Visit Summary");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
+        Label pediaSyncLabel = new Label("Visit Summary");
+        pediaSyncLabel.setFont(new Font(24));
+        pediaSyncLabel.setLayoutX(80);
+        pediaSyncLabel.setLayoutY(20);
 
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
 
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+        Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+        crossVertical.setFill(Color.RED);
 
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    
-	    Label visitSummaryLabel = new Label(": " + visitSummary);
-	    visitSummaryLabel.setFont(new Font(12));
-	    visitSummaryLabel.setLayoutX(100);
-	    visitSummaryLabel.setLayoutY(100);
-	    
-	    
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(patientView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton, visitSummaryLabel);
-	    
-	    return new Scene(pane, 800, 400);
+        Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+        crossHorizontal.setFill(Color.RED);
+
+        Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+        crossGroup.setLayoutX(50);
+        crossGroup.setLayoutY(12);
+
+
+        Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+        visitSummaryLabel.setFont(new Font(12));
+        visitSummaryLabel.setLayoutX(100);
+        visitSummaryLabel.setLayoutY(100);
+
+
+
+        Button backButton = new Button("<-");
+        backButton.setFont(new Font(12));
+        backButton.setLayoutX(20);
+        backButton.setLayoutY(350);
+        backButton.setOnAction(e -> {
+            this.setScene(patientView());
+        });
+
+        TextArea summary = new TextArea();
+        summary.setEditable(false);
+        summary.setWrapText(true);
+        summary.setPrefHeight(200);
+        summary.setPrefWidth(500);
+        summary.setLayoutX(200);
+        summary.setLayoutY(100);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(username + "_visitSummary"))) {
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            summary.setText(content.toString());
+        } catch (IOException e) {
+            summary.setText("NO ENTRIES ADDED");
+        }
+
+        pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton, visitSummaryLabel, summary);
+
+        return new Scene(pane, 800, 400);
 	}
 	
 
@@ -424,13 +443,13 @@ public class ViewsInterface extends Stage
 
 	private Scene nurseView() {
 		
-		file = new Filer();
+		//file = new Filer();
 		
-		ArrayList<String> list = new ArrayList<String>();
+		//information = file.readFile(username);
 		
-		list = file.readFile(username, 0);
+		//nurseName = information.get(3);
 		
-		nurseName = list.get(3);
+
 		
 		Pane pane = new Pane();
 		
@@ -459,32 +478,25 @@ public class ViewsInterface extends Stage
 	    
 	    Button addPatientInformationButton = new Button("Add Patient Information");
 	    addPatientInformationButton.setOnAction(e -> this.setScene(nurse_addPatientInformationScene()));
-	    Button patientInformationButton = new Button("Patient Information");
-	    patientInformationButton.setOnAction(e -> this.setScene(nurse_patientInformationScene()));
 	    Button patientPortalMessagesButton = new Button("Patient Portal Messages");
 	    patientPortalMessagesButton.setOnAction(e -> this.setScene(nurse_portalMessagesScene()));
 	    
 	    addPatientInformationButton.setPrefWidth(200);
-	    patientInformationButton.setPrefWidth(200);
 	    patientPortalMessagesButton.setPrefWidth(200);
 	    
 	    addPatientInformationButton.setPrefHeight(30);
-	    patientInformationButton.setPrefHeight(30);
 	    patientPortalMessagesButton.setPrefHeight(30);
 	    
 	    addPatientInformationButton.setLayoutX(300);
 	    addPatientInformationButton.setLayoutY(160);
 
-	    patientInformationButton.setLayoutX(300);
-	    patientInformationButton.setLayoutY(200);
-
 	    patientPortalMessagesButton.setLayoutX(300);
-	    patientPortalMessagesButton.setLayoutY(240);
+	    patientPortalMessagesButton.setLayoutY(200);
 	    
 	    
 	    
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,welcomeLabel,addPatientInformationButton,patientInformationButton,patientPortalMessagesButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,welcomeLabel,addPatientInformationButton,patientPortalMessagesButton);
 	    Scene scene = new Scene(pane, 800, 400);
 	    return scene;
 	}
@@ -701,80 +713,6 @@ public class ViewsInterface extends Stage
 	    
 	    return new Scene(pane, 800, 400);
 	}
-	
-	private Scene nurse_patientInformationScene() {
-		Pane pane = new Pane();
-
-	    Label pediaSyncLabel = new Label("Patient Information");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
-
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
-
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
-
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    
-	    
-	    Label contactLabel = new Label("Contact: " + patientContact);
-	    contactLabel.setFont(new Font(12));
-	    contactLabel.setLayoutX(250);
-	    contactLabel.setLayoutY(100);
-	    
-	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
-	    emergencyContactLabel.setFont(new Font(12));
-	    emergencyContactLabel.setLayoutX(250);
-	    emergencyContactLabel.setLayoutY(130);
-	    
-	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
-	    allergiesHealthConcernsLabel.setFont(new Font(12));
-	    allergiesHealthConcernsLabel.setLayoutX(250);
-	    allergiesHealthConcernsLabel.setLayoutY(160);
-	    
-	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
-	    immunizationHistoryLabel.setFont(new Font(12));
-	    immunizationHistoryLabel.setLayoutX(250);
-	    immunizationHistoryLabel.setLayoutY(190);
-	    
-	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
-	    patientHistoryLabel.setFont(new Font(12));
-	    patientHistoryLabel.setLayoutX(250);
-	    patientHistoryLabel.setLayoutY(220);
-	    
-	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
-	    prescriptionLabel.setFont(new Font(12));
-	    prescriptionLabel.setLayoutX(250);
-	    prescriptionLabel.setLayoutY(250);
-	    
-	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
-	    vitalsLabel.setFont(new Font(12));
-	    vitalsLabel.setLayoutX(250);
-	    vitalsLabel.setLayoutY(280);
-	    
-	    
-	    
-	    
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(nurseView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel);
-	    
-	    return new Scene(pane, 800, 400);
-	}
 
 
 	// This is the nurse messaging portal class. It asks the user for the patient ID
@@ -872,13 +810,6 @@ public class ViewsInterface extends Stage
 		
 		//doctorLastName = information.get(3);
 		
-		file = new Filer();
-		
-		ArrayList<String> list = new ArrayList<String>();
-		
-		list = file.readFile(username, 0);
-		
-		doctorLastName = list.get(3);
 
 		Pane pane = new Pane();
 		
@@ -910,19 +841,16 @@ public class ViewsInterface extends Stage
 	    addPatientInformationButton.setOnAction(e -> this.setScene(doctor_addPatientInformationScene()));
 	    Button visitSummaryButton = new Button("Visit Summary");
 	    visitSummaryButton.setOnAction(e -> this.setScene(doctor_visitSummaryScene()));
-	    Button patientInformationButton = new Button("Patient Information");
-	    patientInformationButton.setOnAction(e -> this.setScene(doctor_patientInformationScene()));
+	 
 	    Button patientPortalMessagesButton = new Button("Patient Portal Messages");
 	    patientPortalMessagesButton.setOnAction(e -> this.setScene(doctor_portalMessagesScene()));
 	    
 	    addPatientInformationButton.setPrefWidth(200);
 	    visitSummaryButton.setPrefWidth(200);
-	    patientInformationButton.setPrefWidth(200);
 	    patientPortalMessagesButton.setPrefWidth(200);
 	    
 	    addPatientInformationButton.setPrefHeight(30);
 	    visitSummaryButton.setPrefHeight(30);
-	    patientInformationButton.setPrefHeight(30);
 	    patientPortalMessagesButton.setPrefHeight(30);
 	    
 	    addPatientInformationButton.setLayoutX(300);
@@ -931,16 +859,13 @@ public class ViewsInterface extends Stage
 	    visitSummaryButton.setLayoutX(300);
 	    visitSummaryButton.setLayoutY(200);
 
-	    patientInformationButton.setLayoutX(300);
-	    patientInformationButton.setLayoutY(240);
-	    
 	    patientPortalMessagesButton.setLayoutX(300);
-	    patientPortalMessagesButton.setLayoutY(280);
+	    patientPortalMessagesButton.setLayoutY(240);
 	    
 	    
 	    
 	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,welcomeLabel,addPatientInformationButton,visitSummaryButton,patientInformationButton,patientPortalMessagesButton);
+	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,welcomeLabel,addPatientInformationButton,visitSummaryButton,patientPortalMessagesButton);
 	    Scene scene = new Scene(pane, 800, 400);
 	    
 	    return scene;
@@ -1071,166 +996,86 @@ public class ViewsInterface extends Stage
 	private Scene doctor_visitSummaryScene() {
 		Pane pane = new Pane();
 
-	    Label pediaSyncLabel = new Label("Visit Summary");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
+        Label promptLabel = new Label("Enter the patient Username to be messaged: ");
+        promptLabel.setFont(new Font(18));
+        promptLabel.setLayoutX(100);
+        promptLabel.setLayoutY(50);
 
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
+        TextField idInput = new TextField();
+        idInput.setLayoutX(100);
+        idInput.setLayoutY(80);
+        idInput.setPrefWidth(200);
 
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
+        Button submitButton = new Button("Submit");
+        submitButton.setFont(new Font(14));
+        submitButton.setLayoutX(600);
+        submitButton.setLayoutY(80);
 
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    
-	    Label visitSummaryLabel = new Label(": " + visitSummary);
-	    visitSummaryLabel.setFont(new Font(12));
-	    visitSummaryLabel.setLayoutX(100);
-	    visitSummaryLabel.setLayoutY(100);
-	    
-	    TextArea summary = new TextArea();
-        summary.setEditable(false);
-        summary.setWrapText(true);
-        summary.setPrefHeight(200);
-        summary.setPrefWidth(500);
-        summary.setLayoutX(200);
-        summary.setLayoutY(100);
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(username + "_VisitSummary.txt"));
-            String summaryFile = reader.readLine();
-            summary.setText(summaryFile);
-        }
-        catch (IOException e) {
-            e.setStackTrace(null);
-        }
-	    
-	    Button addVisitSummaryButton = new Button("+");
-	    addVisitSummaryButton.setLayoutX(750);
-	    addVisitSummaryButton.setLayoutY(350);
-	    
-	    TextArea notes = new TextArea();
-        notes.setWrapText(true);
-        notes.setPrefHeight(200);
-        notes.setPrefWidth(500);
-        notes.setLayoutX(200);
-        notes.setLayoutY(100);
+        Button backButton = new Button("<-");
+        backButton.setFont(new Font(12));
+        backButton.setLayoutX(750);
+        backButton.setLayoutY(20);
+        backButton.setOnAction(e -> {
+            this.setScene(doctorView());
+        });
 
-        TextArea checkUsername = new TextArea();
-        checkUsername.setLayoutX(200);
-        checkUsername.setLayoutY(50);
-        checkUsername.setPrefHeight(1);
+        pane.getChildren().addAll(promptLabel, idInput, submitButton, backButton);
 
-        addVisitSummaryButton.setOnAction(e -> {
-            try {
-                String u = checkUsername.getText();
-                Filer filer = new Filer();
-                if (filer.checkUsername(u) == 1) {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(u + "_VisitSummary"));
-                    writer.write(notes.getText());
-                    writer.close();
+        submitButton.setOnAction(e -> {
+            pane.getChildren().clear();
+
+            Label pediaSyncLabel = new Label("Visit Summary");
+            pediaSyncLabel.setFont(new Font(24));
+            pediaSyncLabel.setLayoutX(80);
+            pediaSyncLabel.setLayoutY(20);
+
+
+            Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
+            crossVertical.setFill(Color.RED);
+
+            Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
+            crossHorizontal.setFill(Color.RED);
+
+            Group crossGroup = new Group(crossVertical, crossHorizontal);
+
+            crossGroup.setLayoutX(50);
+            crossGroup.setLayoutY(12);
+
+            Label visitSummaryLabel = new Label(date + ": ");
+            visitSummaryLabel.setFont(new Font(12));
+            visitSummaryLabel.setLayoutX(100);
+            visitSummaryLabel.setLayoutY(100);
+
+            TextArea summary = new TextArea();
+            summary.setEditable(true);
+            summary.setWrapText(true);
+            summary.setPrefHeight(200);
+            summary.setPrefWidth(500);
+            summary.setLayoutX(200);
+            summary.setLayoutY(100);
+
+            Button submit = new Button("Sumbit");
+            submit.setLayoutX(645);
+            submit.setLayoutY(310);
+
+            submit.setOnAction(event -> {
+                String summaryTxt = summary.getText();
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(idInput.getText() + "_visitSummary"))) {
+                    writer.write(summaryTxt);
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                else
-                    checkUsername.clear();
-            }
-            catch(IOException error) {
-                error.printStackTrace();
-            }
+                this.setScene(doctorView());
+            });
 
-        }); 
+            pane.getChildren().addAll(pediaSyncLabel, crossGroup, backButton, visitSummaryLabel, summary, submit);
+        });
 
-	    
-	    
-	    
-	    
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(doctorView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,visitSummaryLabel,addVisitSummaryButton);
-	    
-	    return new Scene(pane, 800, 400);
+        return new Scene(pane, 800, 400);
 	}
 	
-	private Scene doctor_patientInformationScene() {
-		Pane pane = new Pane();
-
-	    Label pediaSyncLabel = new Label("Patient Information");
-	    pediaSyncLabel.setFont(new Font(24));
-	    pediaSyncLabel.setLayoutX(80);
-	    pediaSyncLabel.setLayoutY(20);
-	    
-	    
-	    Rectangle crossVertical = new Rectangle(0, 12, 10, 30);
-	    crossVertical.setFill(Color.RED);
-
-	    Rectangle crossHorizontal = new Rectangle(-10, 22, 30, 10);
-	    crossHorizontal.setFill(Color.RED);
-
-	    Group crossGroup = new Group(crossVertical, crossHorizontal);
-
-	    crossGroup.setLayoutX(50);
-	    crossGroup.setLayoutY(12);
-	    
-	    
-	    Label contactLabel = new Label("Contact: " + patientContact);
-	    contactLabel.setFont(new Font(12));
-	    contactLabel.setLayoutX(250);
-	    contactLabel.setLayoutY(100);
-	    
-	    Label emergencyContactLabel = new Label("Emergency Contact: " + patientEmergencyContact);
-	    emergencyContactLabel.setFont(new Font(12));
-	    emergencyContactLabel.setLayoutX(250);
-	    emergencyContactLabel.setLayoutY(130);
-	    
-	    Label allergiesHealthConcernsLabel = new Label("Allergies and Health Concerns: " + patientAllergiesHealthConcerns);
-	    allergiesHealthConcernsLabel.setFont(new Font(12));
-	    allergiesHealthConcernsLabel.setLayoutX(250);
-	    allergiesHealthConcernsLabel.setLayoutY(160);
-	    
-	    Label immunizationHistoryLabel = new Label("Immunization History: " + patientImmunization);
-	    immunizationHistoryLabel.setFont(new Font(12));
-	    immunizationHistoryLabel.setLayoutX(250);
-	    immunizationHistoryLabel.setLayoutY(190);
-	    
-	    Label patientHistoryLabel = new Label("Patient History: " + patientHistory);
-	    patientHistoryLabel.setFont(new Font(12));
-	    patientHistoryLabel.setLayoutX(250);
-	    patientHistoryLabel.setLayoutY(220);
-	    
-	    Label prescriptionLabel = new Label("Prescription: " + patientPrescription);
-	    prescriptionLabel.setFont(new Font(12));
-	    prescriptionLabel.setLayoutX(250);
-	    prescriptionLabel.setLayoutY(250);
-	    
-	    Label vitalsLabel = new Label("Vitals: " + patientVitals);
-	    vitalsLabel.setFont(new Font(12));
-	    vitalsLabel.setLayoutX(250);
-	    vitalsLabel.setLayoutY(280);
-	    
-	    
-	    Button backButton = new Button("<-");
-	    backButton.setFont(new Font(12));
-	    backButton.setLayoutX(20);
-	    backButton.setLayoutY(350);
-	    backButton.setOnAction(e -> {
-	        this.setScene(doctorView());
-	    });
-	    
-	    pane.getChildren().addAll(pediaSyncLabel,crossGroup,backButton,contactLabel,emergencyContactLabel,allergiesHealthConcernsLabel,immunizationHistoryLabel,patientHistoryLabel,prescriptionLabel,vitalsLabel);
-	    
-	    return new Scene(pane, 800, 400);
-	}
 
 
 	// This is the messaging portal class for the doctor. It is nearly identical to the Nurse one
