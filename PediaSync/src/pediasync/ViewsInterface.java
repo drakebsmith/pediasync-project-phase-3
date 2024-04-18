@@ -38,8 +38,6 @@ public class ViewsInterface extends Stage
 	String patientVitals = "";
 	String visitSummary = "";
 	
-	String date = "4/9/2004";
-	
 	int counter = 0;
 	
 	
@@ -93,7 +91,6 @@ public class ViewsInterface extends Stage
 		list = file.readFile(username, 0);
 		
 		patientName = list.get(2);
-		//fix
         
 		Pane pane = new Pane();
 
@@ -395,7 +392,7 @@ public class ViewsInterface extends Stage
         crossGroup.setLayoutY(12);
 
 
-        Label visitSummaryLabel = new Label(date + ": " + visitSummary);
+        Label visitSummaryLabel = new Label(visitSummary);
         visitSummaryLabel.setFont(new Font(12));
         visitSummaryLabel.setLayoutX(100);
         visitSummaryLabel.setLayoutY(100);
@@ -449,7 +446,13 @@ public class ViewsInterface extends Stage
 		
 		//nurseName = information.get(3);
 		
-
+		file = new Filer();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list = file.readFile(username, 0);
+		
+		nurseName = list.get(3);
 		
 		Pane pane = new Pane();
 		
@@ -810,6 +813,13 @@ public class ViewsInterface extends Stage
 		
 		//doctorLastName = information.get(3);
 		
+		file = new Filer();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list = file.readFile(username, 0);
+		
+		doctorLastName = list.get(3);
 
 		Pane pane = new Pane();
 		
@@ -1041,7 +1051,7 @@ public class ViewsInterface extends Stage
             crossGroup.setLayoutX(50);
             crossGroup.setLayoutY(12);
 
-            Label visitSummaryLabel = new Label(date + ": ");
+            Label visitSummaryLabel = new Label(": ");
             visitSummaryLabel.setFont(new Font(12));
             visitSummaryLabel.setLayoutX(100);
             visitSummaryLabel.setLayoutY(100);
